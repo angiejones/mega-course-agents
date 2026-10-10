@@ -1,0 +1,29 @@
+{
+  "name": "MEGA course agents",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "node",
+  "forwardPorts": [
+    4111
+  ],
+  "portsAttributes": {
+    "4111": {
+      "label": "Mastra Studio (once installed)",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": [
+    "bash",
+    ".devcontainer/check-environment.sh"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.fontSize": 18,
+        "terminal.integrated.fontSize": 16,
+        "editor.formatOnSave": true
+      }
+    }
+  }
+}
