@@ -1,0 +1,56 @@
+{
+  "name": "mega-course-agents",
+  "version": "1.0.0",
+  "description": "MEGA retail agent course",
+  "scripts": {
+    "dev": "mastra dev --dir apps/retail/src/mastra",
+    "start": "npm run dev",
+    "seed": "tsx scripts/seed.ts",
+    "reset": "tsx scripts/seed.ts",
+    "health": "tsx scripts/health.ts",
+    "chat": "tsx scripts/chat.ts",
+    "test": "tsx --test packages/*/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "eval": "tsx scripts/eval.ts",
+    "verify:models": "tsx scripts/verify-models.ts",
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "check": "npm run typecheck && npm test && npm run check:secrets",
+    "build": "mastra build --dir apps/retail/src/mastra",
+    "reset:preferences": "tsx scripts/reset-preferences.ts",
+    "rehearse:chapter1": "tsx scripts/chapter1-evidence.ts",
+    "verify:step-limit": "tsx scripts/check-step-limit.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angiejones/mega-course-agents.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/angiejones/mega-course-agents/issues"
+  },
+  "homepage": "https://github.com/angiejones/mega-course-agents#readme",
+  "dependencies": {
+    "@a2a-js/sdk": "1.3.0",
+    "@mastra/core": "1.77.0",
+    "@mastra/libsql": "1.26.1",
+    "@mastra/memory": "1.37.1",
+    "@mastra/observability": "1.20.0",
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "dotenv": "18.0.7",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "mastra": "1.34.1",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22.23.3 <23"
+  },
+  "packageManager": "npm@10.9.9"
+}

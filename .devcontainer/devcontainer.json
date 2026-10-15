@@ -9,14 +9,11 @@
   ],
   "portsAttributes": {
     "4111": {
-      "label": "Mastra Studio (once installed)",
+      "label": "Mastra Studio",
       "onAutoForward": "notify"
     }
   },
-  "postCreateCommand": [
-    "bash",
-    ".devcontainer/check-environment.sh"
-  ],
+  "postCreateCommand": "npm ci && npm run seed && npm run check",
   "customizations": {
     "vscode": {
       "settings": {

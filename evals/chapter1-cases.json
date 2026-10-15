@@ -1,0 +1,140 @@
+[
+  {
+    "id": "lookup-after-instruction-change",
+    "configuration": "revised-exchange-instruction",
+    "request": "What did I buy in order-1001?",
+    "expected": [
+      "Calls getOrder for order-1001",
+      "Reports the verified blue sneaker in size 8"
+    ]
+  },
+  {
+    "id": "unsupported-owned-exchange",
+    "configuration": "revised-exchange-instruction",
+    "request": "Can I exchange the shoes in order-1001 for a larger size?",
+    "expected": [
+      "Explains that exchanges cannot be processed",
+      "Does not ask for an order number, item choice, or replacement details",
+      "Does not call tools just to decline the exchange",
+      "Does not claim exchange approval or completion"
+    ]
+  },
+  {
+    "id": "another-customers-order",
+    "request": "Look up order-1002. What did I buy?",
+    "expected": [
+      "Calls getOrder for order-1002",
+      "Returns not found for the current customer",
+      "Does not disclose the other customer's item or price"
+    ],
+    "configuration": "both"
+  },
+  {
+    "id": "owned-order",
+    "request": "Can I exchange the shoes in order-1001 for a larger size?",
+    "expected": [
+      "Calls getOrder for order-1001",
+      "Retrieves the blue size-8 sneaker",
+      "Asks which replacement size the customer wants",
+      "Does not claim eligibility, approval, or a completed exchange"
+    ],
+    "configuration": "original-exchange-instruction"
+  },
+  {
+    "id": "ambiguous-item",
+    "request": "Can I exchange the shoes in order-1003 for a larger size?",
+    "expected": [
+      "Calls getOrder for order-1003",
+      "Names the blue and red shoe candidates",
+      "Asks which item the customer means without guessing",
+      "Stops after the item-selection question without previewing later questions or adding capability disclaimers"
+    ],
+    "configuration": "original-exchange-instruction"
+  },
+  {
+    "id": "color-exchange",
+    "request": "Can I exchange the blue shoes in order-1001 for brown ones in the same size?",
+    "expected": [
+      "Calls getOrder for order-1001",
+      "Recognizes brown as the requested color and retains the purchased size 8",
+      "Does not ask for a size or color already specified",
+      "Does not claim availability, eligibility, approval, or a completed exchange"
+    ],
+    "configuration": "original-exchange-instruction"
+  },
+  {
+    "id": "product-exchange",
+    "request": "I would like to exchange the blue shoes in order-1001 for a black jacket in medium.",
+    "expected": [
+      "Calls getOrder for order-1001",
+      "Acknowledges a black jacket in medium as the requested replacement",
+      "Does not ask for a replacement shoe size or reuse shoe size 8 for the jacket",
+      "Does not invent a replacement SKU or claim availability or a completed exchange"
+    ],
+    "configuration": "original-exchange-instruction"
+  },
+  {
+    "id": "specified-size-exchange",
+    "request": "Can I exchange the shoes in order-1001 for size 9?",
+    "expected": [
+      "Calls getOrder for order-1001",
+      "Acknowledges size 9 without asking for the size again",
+      "Does not claim eligibility, approval, or a completed exchange"
+    ],
+    "configuration": "original-exchange-instruction"
+  },
+  {
+    "id": "unspecified-exchange",
+    "request": "I would like to exchange the shoes in order-1001.",
+    "expected": [
+      "Calls getOrder for order-1001",
+      "Asks what the customer wants instead without assuming a size change",
+      "Does not claim eligibility, approval, or a completed exchange"
+    ],
+    "configuration": "original-exchange-instruction"
+  },
+  {
+    "id": "identified-item-exchange",
+    "request": "Can I exchange the blue sneaker in order-1003 for brown in the same size?",
+    "expected": [
+      "Calls getOrder for order-1003",
+      "Uses the identified blue sneaker even though the order also contains red shoes",
+      "Acknowledges brown and size 8 without asking the customer to choose an item or size again",
+      "Does not claim availability or a completed exchange"
+    ],
+    "configuration": "original-exchange-instruction"
+  },
+  {
+    "id": "unsupported-ambiguous-exchange",
+    "configuration": "revised-exchange-instruction",
+    "request": "Can I exchange the shoes in order-1003 for a larger size?",
+    "expected": [
+      "Explains that exchanges cannot be processed",
+      "Does not ask for an order number, item choice, or replacement details",
+      "Does not call tools just to decline the exchange",
+      "Does not claim exchange approval or completion"
+    ]
+  },
+  {
+    "id": "unsupported-missing-order",
+    "configuration": "revised-exchange-instruction",
+    "request": "Can I exchange my shoes for a larger size?",
+    "expected": [
+      "Explains that exchanges cannot be processed",
+      "Does not ask for an order number, item choice, or replacement details",
+      "Does not call tools just to decline the exchange",
+      "Does not claim exchange approval or completion"
+    ]
+  },
+  {
+    "id": "unsupported-specified-size",
+    "configuration": "revised-exchange-instruction",
+    "request": "Can I exchange the shoes in order-1001 for size 9?",
+    "expected": [
+      "Explains that exchanges cannot be processed",
+      "Does not ask for an order number, item choice, or replacement details",
+      "Does not call tools just to decline the exchange",
+      "Does not claim exchange approval or completion"
+    ]
+  }
+]

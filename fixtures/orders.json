@@ -1,0 +1,58 @@
+[
+  {
+    "id": "order-1001",
+    "customerId": "customer-alex",
+    "status": "delivered",
+    "deliveredAt": "2026-10-25",
+    "items": [
+      {
+        "sku": "shoe-blue-8",
+        "name": "Blue everyday sneaker",
+        "size": "8",
+        "quantity": 1,
+        "paidCents": 7900,
+        "currency": "USD"
+      }
+    ]
+  },
+  {
+    "id": "order-1002",
+    "customerId": "customer-sam",
+    "status": "delivered",
+    "deliveredAt": "2026-10-20",
+    "items": [
+      {
+        "sku": "jacket-green-m",
+        "name": "Green rain jacket",
+        "size": "M",
+        "quantity": 1,
+        "paidCents": 12900,
+        "currency": "USD"
+      }
+    ]
+  },
+  {
+    "id": "order-1003",
+    "customerId": "customer-alex",
+    "status": "delivered",
+    "deliveredAt": "2026-10-25",
+    "items": [
+      {
+        "sku": "shoe-blue-8",
+        "name": "Blue everyday sneaker",
+        "size": "8",
+        "quantity": 1,
+        "paidCents": 7900,
+        "currency": "USD"
+      },
+      {
+        "sku": "shoe-red-8",
+        "name": "Red running shoe",
+        "size": "8",
+        "quantity": 1,
+        "paidCents": 9900,
+        "currency": "USD"
+      }
+    ]
+  }
+]
