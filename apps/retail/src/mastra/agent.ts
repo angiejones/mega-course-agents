@@ -35,7 +35,7 @@ export const exchangeInstruction = [
 
 export const customerServiceConfig = {
   exchangeInstruction,
-  orderLookup: false,
+  orderLookup: true,
 };
 
 export const retailAgent = new Agent({
