@@ -10,6 +10,8 @@ process.env.STORE_DB_PATH = resolve(directory, 'store.db');
 process.env.AGENT_DB_PATH = resolve(directory, 'agent.db');
 const { settings } = await import('../packages/config.ts');
 const { mastra } = await import('../apps/retail/src/mastra/index.ts');
+const { customerServiceConfig } = await import('../apps/retail/src/mastra/agent.ts');
+const originalOrderLookup = customerServiceConfig.orderLookup;
 const { openStore, seed } = await import('../packages/store/index.ts');
 const db = openStore();
 seed(db);
@@ -35,7 +37,9 @@ const model = new MastraLanguageModelV2Mock({
   },
 });
 
+// This check needs the lookup tool, regardless of the recording configuration.
 try {
+  customerServiceConfig.orderLookup = true;
   const result = await mastra.getAgent('retailAgent').generate(
     'Look up order-1001.',
     {
@@ -65,5 +69,6 @@ try {
     ? error.message : 'Step-limit verification failed.');
   process.exitCode = 1;
 } finally {
+  customerServiceConfig.orderLookup = originalOrderLookup;
   await mastra.observability.flush();
 }
