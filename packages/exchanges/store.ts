@@ -192,7 +192,7 @@ export function commitExchange(db: DatabaseSync, customerId: string, requestId: 
       .run(current.quantity, current.replacementSku, current.quantity);
     if (updated.changes !== 1) fail('out_of_stock');
     const result = { exchangeId: randomUUID(), requestId, status: 'committed', ...current,
-      paymentStatus: 'simulated', returnStatus: 'awaiting_return' };
+      paymentStatus: 'not_processed', returnStatus: 'awaiting_return' };
     db.prepare('INSERT INTO exchanges VALUES (?,?,?,?,?,?,?)').run(result.exchangeId, requestId, customerId, current.orderId, current.sku, current.quantity, JSON.stringify(result));
     db.prepare("UPDATE exchange_requests SET state='committed', result=? WHERE id=?").run(JSON.stringify(result), requestId);
     return result;
