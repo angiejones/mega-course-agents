@@ -1,0 +1,14 @@
+{
+  "id": "exchange-v1",
+  "windowDays": 30,
+  "quoteMinutes": 15,
+  "feeCents": 0,
+  "currency": "USD",
+  "clock": "2026-11-03T12:00:00.000Z",
+  "description": [
+    "Store policy: items may be exchanged within 30 calendar days of delivery, including",
+    "day 30. Final-sale items are excluded. Exchanges use the original paid amount and",
+    "current replacement price, with no exchange fee. Reported product problems require",
+    "review. Payment differences are recorded only; no money is moved."
+  ]
+}

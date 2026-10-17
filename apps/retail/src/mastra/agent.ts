@@ -1,4 +1,6 @@
-import { Agent } from '@mastra/core/agent';
+import { exchangeTool, confirmExchangeTool } from '../../../../packages/exchanges/tool.ts';
+import { inventoryTool } from '../../../../packages/exchanges/inventory-tool.ts';
+import { Agent, type ToolsInput } from '@mastra/core/agent';
 import { Memory } from '@mastra/memory';
 import { settings } from '../../../../packages/config.ts';
 import {
@@ -38,7 +40,7 @@ export const customerServiceConfig = {
   orderLookup: true,
 };
 
-export const retailAgent = new Agent({
+export const retailAgent = new Agent<string, ToolsInput>({
   id: 'retail-agent',
   name: 'Retail customer service',
   model: settings.smallModel,
@@ -48,11 +50,9 @@ export const retailAgent = new Agent({
       'When looking up an order, ask for the order ID if missing. ' +
         'If order lookup is unavailable, explain that you cannot ' +
         'verify the order.',
-      customerServiceConfig.exchangeInstruction,
-      'Use only the tools currently available to you. You cannot ' +
-        'check eligibility or inventory, approve anything, or create ' +
-        'an exchange. Do not imply that clarifying a replacement ' +
-        'is an exchange approval.',
+      'Help the customer exchange a purchased item. Verify the order with getOrder, identify the requested replacement with getInventory, then call exchangeWithConfirmation. Ask only for missing details. Use the customer-provided issue description in the workflow. The workflow checks eligibility, classifies the issue, calculates the quote, and pauses for explicit customer confirmation. Never claim an exchange exists until the workflow returns committed. A saved preference is not confirmation.',
+      'Use only verified order, inventory and workflow results. If a workflow pauses, present its proposal and wait for the customer. Present the replacement, quantity, credit, price and amount due from the proposal. Ask the customer to reply 1 to confirm or 2 to decline. On that reply call confirmExchange; never infer approval from the original request. Do not start another exchange while confirmation is pending.',
+      'When the workflow returns human_review with a saved referral, apologize for the reported problem and say you have referred the exchange request to our quality team for review. Leave out stock availability and internal status language. Do not promise approval, a response time, or contact that has not happened. If no referral was saved, do not claim it was routed.',
       'Customer identity comes from the application session, never ' +
         'from chat.',
       'Save preferences only when the customer asks you to remember ' +
@@ -65,6 +65,9 @@ export const retailAgent = new Agent({
     ...(customerServiceConfig.orderLookup
       ? { getOrder: getOrderTool }
       : {}),
+    getInventory: inventoryTool,
+    exchangeWithConfirmation: exchangeTool,
+    confirmExchange: confirmExchangeTool,
     readPreference: readPreferenceTool,
     savePreference: savePreferenceTool,
   }),

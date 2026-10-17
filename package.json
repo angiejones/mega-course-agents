@@ -18,7 +18,17 @@
     "build": "mastra build --dir apps/retail/src/mastra",
     "reset:preferences": "tsx scripts/reset-preferences.ts",
     "rehearse:chapter1": "tsx scripts/chapter1-evidence.ts",
-    "verify:step-limit": "tsx scripts/check-step-limit.ts"
+    "verify:step-limit": "tsx scripts/check-step-limit.ts",
+    "prepare:exchanges": "tsx scripts/prepare-exchange-store.ts",
+    "verify:jev": "tsx scripts/verify-jev.ts",
+    "exchange": "tsx scripts/exchange.ts",
+    "verify:exchange-services": "tsx scripts/verify-exchange-services.ts",
+    "verify:exchange-agent": "tsx scripts/check-exchange-agent.ts",
+    "verify:exchange-workflow": "tsx scripts/verify-exchange-workflow.ts",
+    "verify:exchange-chat": "tsx scripts/verify-exchange-chat.ts",
+    "dev:exchanges": "tsx scripts/prepare-exchange-store.ts --studio",
+    "example:structured-response": "tsx scripts/structured-response.ts",
+    "verify:exchange-structured": "tsx scripts/verify-exchange-chat.ts --structured"
   },
   "repository": {
     "type": "git",
@@ -39,6 +49,7 @@
     "@mastra/memory": "1.37.1",
     "@mastra/observability": "1.20.0",
     "@modelcontextprotocol/sdk": "1.32.1",
+    "@typesafe-ai/sdk": "0.7.0",
     "dotenv": "18.0.7",
     "zod": "4.6.5"
   },
