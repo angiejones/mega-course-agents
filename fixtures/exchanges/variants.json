@@ -1,8 +1,8 @@
 [
-  {"sku":"shoe-blue-8","productId":"everyday-sneaker","name":"Blue everyday sneaker","size":"8","color":"blue","priceCents":7900,"currency":"USD","stock":4},
-  {"sku":"shoe-blue-9","productId":"everyday-sneaker","name":"Blue everyday sneaker","size":"9","color":"blue","priceCents":7900,"currency":"USD","stock":3},
-  {"sku":"shoe-blue-10","productId":"everyday-sneaker","name":"Blue everyday sneaker","size":"10","color":"blue","priceCents":7900,"currency":"USD","stock":0},
-  {"sku":"shoe-brown-8","productId":"everyday-sneaker","name":"Brown everyday sneaker","size":"8","color":"brown","priceCents":8900,"currency":"USD","stock":2},
-  {"sku":"shoe-red-9","productId":"running-shoe","name":"Red running shoe","size":"9","color":"red","priceCents":9900,"currency":"USD","stock":2},
-  {"sku":"shoe-sale-9","productId":"clearance-sneaker","name":"Clearance sneaker","size":"9","color":"white","priceCents":5900,"currency":"USD","stock":2}
+  {"sku": "jacket-blue-m", "productId": "everyday-jacket", "name": "Blue everyday jacket", "size": "M", "color": "blue", "priceCents": 7900, "currency": "USD", "stock": 4},
+  {"sku": "jacket-blue-l", "productId": "everyday-jacket", "name": "Blue everyday jacket", "size": "L", "color": "blue", "priceCents": 7900, "currency": "USD", "stock": 3},
+  {"sku": "jacket-blue-xl", "productId": "everyday-jacket", "name": "Blue everyday jacket", "size": "XL", "color": "blue", "priceCents": 7900, "currency": "USD", "stock": 0},
+  {"sku": "jacket-brown-m", "productId": "everyday-jacket", "name": "Brown everyday jacket", "size": "M", "color": "brown", "priceCents": 8900, "currency": "USD", "stock": 2},
+  {"sku": "jacket-red-l", "productId": "quilted-jacket", "name": "Red quilted jacket", "size": "L", "color": "red", "priceCents": 9900, "currency": "USD", "stock": 2},
+  {"sku": "jacket-sale-l", "productId": "clearance-jacket", "name": "Clearance jacket", "size": "L", "color": "white", "priceCents": 5900, "currency": "USD", "stock": 2}
 ]

@@ -13,7 +13,7 @@ const evidence: object[] = [];
 try {
   for (const decision of ['decline', 'confirm'] as const) {
     const run = await workflow.createRun();
-    const start = await run.start({ inputData: { orderId: 'order-1001', sku: 'shoe-blue-8', replacementSku: 'shoe-blue-9', quantity: 1, message: 'These squeeze my toes; I need size 9.' } });
+    const start = await run.start({ inputData: { orderId: 'order-1001', sku: 'jacket-blue-m', replacementSku: 'jacket-blue-l', quantity: 1, message: 'These feel tight across my shoulders; I need size L.' } });
     assert.equal(start.status, 'suspended');
     assert.equal(db.prepare('SELECT count(*) AS n FROM exchanges').get()?.n, 0);
     const resumed = await run.resume({ step: 'confirm-exchange', resumeData: { decision } });

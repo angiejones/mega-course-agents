@@ -8,12 +8,12 @@ import { prepareExchangeFlow } from '../packages/exchanges/flow.ts';
 import { openExchangeStore, recordConfirmation, commitExchange, ExchangeError, fixtureClock } from '../packages/exchanges/store.ts';
 import { JevError, type Decision } from '../packages/jev/client.ts';
 
-// Supplied developer interaction, with a simulated Alex session. This isn't a login.
+// Supplied developer interaction, with a configured Alex session. This isn't a login.
 async function main() {
   const file = process.argv[2];
   if (!file) throw new Error('Usage: npm run exchange -- data/exchanges/<run>/manifest.json');
   const manifest = z.object({ storePath: z.string(), customerId: z.literal('customer-alex'),
-    startingOrder: z.literal('order-1001'), replacementSku: z.literal('shoe-blue-9') }).parse(JSON.parse(readFileSync(file, 'utf8')));
+    startingOrder: z.literal('order-1001'), replacementSku: z.literal('jacket-blue-l') }).parse(JSON.parse(readFileSync(file, 'utf8')));
   const path = realpathSync(manifest.storePath);
   const storeRoots = ['data/exchanges', 'data/chapter2'].map(directory => resolve(directory)).filter(existsSync);
   if (!storeRoots.some(directory => path.startsWith(realpathSync(directory) + sep))) throw new Error('Use an isolated exchange manifest.');
@@ -29,11 +29,11 @@ async function main() {
   const started = Date.now();
   const now = () => new Date(Date.parse(fixtureClock) + Date.now() - started).toISOString();
   try {
-    console.log('Fictional store. Testing on Alex\'s behalf. Payment and shipping are simulated.');
+    console.log('Customer: Alex. Payment and shipping integrations are not connected.');
     if (offline) console.log('OFFLINE FIXTURE: decision is forced to fit_preference for interaction testing. No Jev call is made.');
     const message = await ui.question('Describe Alex\'s issue: ');
     const prepared = await prepareExchangeFlow(db, manifest.customerId, {
-      orderId: manifest.startingOrder, sku: 'shoe-blue-8', replacementSku: manifest.replacementSku, quantity: 1,
+      orderId: manifest.startingOrder, sku: 'jacket-blue-m', replacementSku: manifest.replacementSku, quantity: 1,
     }, message, offline ? async () => fixture : undefined, now());
     if (prepared.status !== 'awaiting_confirmation') {
       console.log(JSON.stringify(prepared, null, 2)); return;

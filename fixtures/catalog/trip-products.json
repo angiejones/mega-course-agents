@@ -1,0 +1,218 @@
+[
+  {
+    "id": "coast",
+    "name": "Coast rain jacket",
+    "category": "rain-jacket",
+    "variants": [
+      {
+        "sku": "coast-m",
+        "productId": "coast",
+        "name": "Coast rain jacket",
+        "category": "rain-jacket",
+        "size": "M",
+        "priceCents": 6900,
+        "currency": "USD",
+        "stock": 8
+      },
+      {
+        "sku": "coast-l",
+        "productId": "coast",
+        "name": "Coast rain jacket",
+        "category": "rain-jacket",
+        "size": "L",
+        "priceCents": 6900,
+        "currency": "USD",
+        "stock": 8
+      },
+      {
+        "sku": "coast-xl",
+        "productId": "coast",
+        "name": "Coast rain jacket",
+        "category": "rain-jacket",
+        "size": "XL",
+        "priceCents": 7400,
+        "currency": "USD",
+        "stock": 8
+      }
+    ]
+  },
+  {
+    "id": "trail",
+    "name": "Trail rain jacket",
+    "category": "rain-jacket",
+    "variants": [
+      {
+        "sku": "trail-m",
+        "productId": "trail",
+        "name": "Trail rain jacket",
+        "category": "rain-jacket",
+        "size": "M",
+        "priceCents": 8900,
+        "currency": "USD",
+        "stock": 5
+      },
+      {
+        "sku": "trail-l",
+        "productId": "trail",
+        "name": "Trail rain jacket",
+        "category": "rain-jacket",
+        "size": "L",
+        "priceCents": 8900,
+        "currency": "USD",
+        "stock": 5
+      },
+      {
+        "sku": "trail-xl",
+        "productId": "trail",
+        "name": "Trail rain jacket",
+        "category": "rain-jacket",
+        "size": "XL",
+        "priceCents": 9400,
+        "currency": "USD",
+        "stock": 5
+      }
+    ]
+  },
+  {
+    "id": "storm",
+    "name": "Storm rain jacket",
+    "category": "rain-jacket",
+    "variants": [
+      {
+        "sku": "storm-m",
+        "productId": "storm",
+        "name": "Storm rain jacket",
+        "category": "rain-jacket",
+        "size": "M",
+        "priceCents": 11900,
+        "currency": "USD",
+        "stock": 4
+      },
+      {
+        "sku": "storm-l",
+        "productId": "storm",
+        "name": "Storm rain jacket",
+        "category": "rain-jacket",
+        "size": "L",
+        "priceCents": 11900,
+        "currency": "USD",
+        "stock": 4
+      },
+      {
+        "sku": "storm-xl",
+        "productId": "storm",
+        "name": "Storm rain jacket",
+        "category": "rain-jacket",
+        "size": "XL",
+        "priceCents": 12400,
+        "currency": "USD",
+        "stock": 4
+      }
+    ]
+  },
+  {
+    "id": "clearance",
+    "name": "Clearance rain jacket",
+    "category": "rain-jacket",
+    "variants": [
+      {
+        "sku": "clearance-m",
+        "productId": "clearance",
+        "name": "Clearance rain jacket",
+        "category": "rain-jacket",
+        "size": "M",
+        "priceCents": 3900,
+        "currency": "USD",
+        "stock": 0
+      },
+      {
+        "sku": "clearance-l",
+        "productId": "clearance",
+        "name": "Clearance rain jacket",
+        "category": "rain-jacket",
+        "size": "L",
+        "priceCents": 3900,
+        "currency": "USD",
+        "stock": 0
+      },
+      {
+        "sku": "clearance-xl",
+        "productId": "clearance",
+        "name": "Clearance rain jacket",
+        "category": "rain-jacket",
+        "size": "XL",
+        "priceCents": 4400,
+        "currency": "USD",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "daypack",
+    "name": "Everyday backpack",
+    "category": "backpack",
+    "variants": [
+      {
+        "sku": "daypack-one-size",
+        "productId": "daypack",
+        "name": "Everyday backpack",
+        "category": "backpack",
+        "size": "one-size",
+        "priceCents": 3900,
+        "currency": "USD",
+        "stock": 10
+      }
+    ]
+  },
+  {
+    "id": "weekender",
+    "name": "Weekend backpack",
+    "category": "backpack",
+    "variants": [
+      {
+        "sku": "weekender-one-size",
+        "productId": "weekender",
+        "name": "Weekend backpack",
+        "category": "backpack",
+        "size": "one-size",
+        "priceCents": 5900,
+        "currency": "USD",
+        "stock": 7
+      }
+    ]
+  },
+  {
+    "id": "trek",
+    "name": "Trek backpack",
+    "category": "backpack",
+    "variants": [
+      {
+        "sku": "trek-one-size",
+        "productId": "trek",
+        "name": "Trek backpack",
+        "category": "backpack",
+        "size": "one-size",
+        "priceCents": 8100,
+        "currency": "USD",
+        "stock": 5
+      }
+    ]
+  },
+  {
+    "id": "outlet",
+    "name": "Outlet backpack",
+    "category": "backpack",
+    "variants": [
+      {
+        "sku": "outlet-one-size",
+        "productId": "outlet",
+        "name": "Outlet backpack",
+        "category": "backpack",
+        "size": "one-size",
+        "priceCents": 1900,
+        "currency": "USD",
+        "stock": 0
+      }
+    ]
+  }
+]

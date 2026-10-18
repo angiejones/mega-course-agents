@@ -31,9 +31,9 @@ Each run creates a new isolated store and automatically sets its database paths 
 
 Open http://localhost:4111, select **Retail customer service**, and ask:
 
-> The blue shoes in order-1001 squeeze my toes. Can I exchange them for size 9?
+> The blue jacket in order-1001 is tight across my shoulders. Can I exchange it for size L?
 
-The agent should look up the order and replacement, prepare a proposal, and ask for `1` to confirm or `2` to decline. Reply in the same chat. Studio replies conversationally. Run `npm run example:structured-response -- --customer customer-alex --message "For order-1001, the shoes are too small and squeeze my toes. Can I exchange them for size 9?"` for a separate, paid call that returns JSON using the same agent and fresh isolated data. Services and payments are fictional. The simulated session is Alex; claiming to be Sam in chat does not change identity. `order-1002` belongs to Sam and must not be returned.
+The agent should look up the order and replacement, prepare a proposal, and ask for `1` to confirm or `2` to decline. Reply in the same chat. Studio replies conversationally. Run `npm run example:structured-response -- --customer customer-alex --message "For order-1001, the jacket is tight across my shoulders. Can I exchange it for size L?"` for a separate, paid call that returns JSON using the same agent and fresh isolated data. Payment processing is not connected. The configured customer is Alex; claiming to be Sam in chat does not change identity. `order-1002` belongs to Sam and must not be returned.
 
 Use **Control+C** in the server terminal to stop Studio. This checkpoint starts no other services. Keep Codespaces forwarded ports private.
 
@@ -45,12 +45,17 @@ On the `chapter1` branch, follow [Chapter 1: Agentic Primitives](docs/chapter-1.
 
 See [Chapter 2: Exchange capabilities](docs/chapter-2.md) for setup, examples, the code map, and checks. This branch contains the completed implementation.
 
+## Chapter 3 walkthrough
+
+On `chapter3`, see [Chapter 3: Agentic capabilities](docs/chapter-3.md) for MCP tools and resources, workspace files, code mode, elicitation, MCP Apps, and Agent Skills. Start Studio before using order lookup from a standalone chat command.
+
 ## Commands
 
 | Command | Purpose |
 | --- | --- |
 | `npm ci` | Install the locked dependencies. |
 | `npm run prepare:exchanges` | Create a new isolated exchange store and print its paths. |
+| `npm run verify:missing-item` | Compare three missing-item requests with and without skills using isolated data and paid model calls. |
 | `npm run verify:exchange-agent` | Check default tools, instructions, response schema, and step limit without model calls. |
 | `npm run seed` | Reload the original order-only fixtures; do not use it to reset an exchange store. |
 | `npm run reset -- size-exchange` | Restore the scenario without removing traces. |
@@ -73,7 +78,7 @@ Container support is configured but not yet verified in a fresh Codespace. See [
 - `apps/retail/src/mastra`: Retail agent, tools, workflow registration, and tracing configuration.
 - `packages/exchanges`: Exchange service, inventory tool, confirmation workflow, and response schema.
 - `packages/store`: SQLite store access with ownership checks.
-- `fixtures`: Fictional orders. No real customer records.
+- `fixtures`: Order fixtures for development and tests.
 - `scripts`: Setup, health, model checks, and chat commands.
 - `evals`: Course evaluation notes; initial executable check is `scripts/eval.ts`.
 - `services`, `agents`, and `skills`: Reserved for later chapters; not implemented yet.

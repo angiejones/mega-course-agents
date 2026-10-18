@@ -10,14 +10,14 @@ import { dirname } from 'node:path';
 import { settings } from '../../../../packages/config.ts';
 import { retailAgent } from './agent.ts';
 import { exchangeWorkflow } from '../../../../packages/exchanges/workflow.ts';
-
-export { getOrderTool } from './tools.ts';
+import { orderServer } from '../../../../packages/mcp/order-server.ts';
 
 mkdirSync(dirname(settings.agentPath), { recursive: true });
 
 export const mastra = new Mastra({
   agents: { retailAgent },
   workflows: { exchangeWorkflow },
+  mcpServers: { orderServer },
   storage: new LibSQLStore({
     id: 'retail-agent-storage',
     url: `file:${settings.agentPath}`,

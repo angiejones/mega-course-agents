@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { openExchangeStore, seedExchangeStore, checkEligibility, calculateQuote, prepareExchange, recordConfirmation, commitExchange, getInventory, fixtureClock, getProposal } from './store.ts';
 const alex = 'customer-alex';
-const input = { orderId: 'order-1001', sku: 'shoe-blue-8', replacementSku: 'shoe-blue-9', quantity: 1 };
+const input = { orderId: 'order-1001', sku: 'jacket-blue-m', replacementSku: 'jacket-blue-l', quantity: 1 };
 function setup() { const db = openExchangeStore(':memory:'); seedExchangeStore(db); return db; }
 function count(db: ReturnType<typeof setup>) { return Number(db.prepare('SELECT count(*) AS n FROM exchanges').get()?.n); }
 function approve(db: ReturnType<typeof setup>, orderId = input.orderId) {
@@ -31,8 +31,8 @@ test('quotes use actual paid amounts and verified inventory', () => {
     assert.equal(calculateQuote(db, alex, input).differenceCents, 0);
     const discounted = calculateQuote(db, alex, { ...input, orderId: 'order-discounted' });
     assert.equal(discounted.creditCents, 5900); assert.equal(discounted.differenceCents, 2000);
-    assert.equal(calculateQuote(db, alex, { ...input, replacementSku: 'shoe-sale-9' }).differenceCents, -2000);
-    assert.throws(() => calculateQuote(db, alex, { ...input, replacementSku: 'shoe-blue-10' }), /out_of_stock/);
+    assert.equal(calculateQuote(db, alex, { ...input, replacementSku: 'jacket-sale-l' }).differenceCents, -2000);
+    assert.throws(() => calculateQuote(db, alex, { ...input, replacementSku: 'jacket-blue-xl' }), /out_of_stock/);
     assert.throws(() => calculateQuote(db, alex, { ...input, replacementSku: 'invented' }), /replacement_not_found/);
   } finally { db.close(); }
 });
@@ -44,7 +44,7 @@ test('unconfirmed, declined, wrong-customer and changed proposals cannot commit'
     assert.throws(() => commitExchange(db, alex, p.requestId, p.fingerprint), /confirmation_required/);
     assert.throws(() => recordConfirmation(db, 'customer-sam', p.requestId, p.fingerprint, true), /request_not_found/);
     assert.throws(() => recordConfirmation(db, alex, p.requestId, 'changed', true), /proposal_changed/);
-    assert.throws(() => prepareExchange(db, alex, { ...input, replacementSku: 'shoe-red-9' }, p.requestId), /request_conflict/);
+    assert.throws(() => prepareExchange(db, alex, { ...input, replacementSku: 'jacket-red-l' }, p.requestId), /request_conflict/);
     recordConfirmation(db, alex, p.requestId, p.fingerprint, false);
     assert.throws(() => commitExchange(db, alex, p.requestId, p.fingerprint), /confirmation_required/);
     assert.equal(count(db), 0); assert.deepEqual(getInventory(db, input.replacementSku), before);
@@ -53,8 +53,8 @@ test('unconfirmed, declined, wrong-customer and changed proposals cannot commit'
 });
 test('commit rechecks stock, price, policy, ownership and expiry without partial mutation', () => {
   const changes = [
-    ["UPDATE inventory SET available=0 WHERE sku='shoe-blue-9'", 'out_of_stock'],
-    ["UPDATE variants SET payload=json_set(payload,'$.priceCents',8900) WHERE sku='shoe-blue-9'", 'quote_changed'],
+    ["UPDATE inventory SET available=0 WHERE sku='jacket-blue-l'", 'out_of_stock'],
+    ["UPDATE variants SET payload=json_set(payload,'$.priceCents',8900) WHERE sku='jacket-blue-l'", 'quote_changed'],
     ["UPDATE exchange_policy SET payload=json_set(payload,'$.id','exchange-v2')", 'quote_changed'],
     ["UPDATE orders SET customer_id='customer-sam' WHERE id='order-1001'", 'order_not_found'],
     ["UPDATE orders SET payload=json_set(payload,'$.items[0].finalSale',json('true')) WHERE id='order-1001'", 'final_sale'],
@@ -104,8 +104,8 @@ test('database failure rolls back stock and the exchange record', () => {
   const db = setup();
   try {
     const p = approve(db); const stock = getInventory(db, input.replacementSku);
-    db.exec("CREATE TRIGGER fail_receipt BEFORE UPDATE OF result ON exchange_requests BEGIN SELECT RAISE(ABORT,'simulated storage failure'); END;");
-    assert.throws(() => commitExchange(db, alex, p.requestId, p.fingerprint), /simulated storage failure/);
+    db.exec("CREATE TRIGGER fail_receipt BEFORE UPDATE OF result ON exchange_requests BEGIN SELECT RAISE(ABORT,'injected storage failure'); END;");
+    assert.throws(() => commitExchange(db, alex, p.requestId, p.fingerprint), /injected storage failure/);
     assert.deepEqual(getInventory(db, input.replacementSku), stock); assert.equal(count(db), 0);
     assert.equal(getProposal(db, alex, p.requestId).state, 'approved');
   } finally { db.close(); }

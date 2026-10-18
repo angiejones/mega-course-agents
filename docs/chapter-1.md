@@ -1,6 +1,6 @@
 # Chapter 1: Agentic Primitives
 
-Start Studio with `npm run dev`. This chapter uses Alex's simulated customer session. Identity is fixed by application configuration, not by a name typed into chat. All store data is fictional.
+Start Studio with `npm run dev`. This chapter uses Alex's configured customer session. Identity is fixed by application configuration, not by a name typed into chat. The store is initialized from order fixtures.
 
 There is one agent throughout this chapter: **Retail customer service**. Change its configuration in `apps/retail/src/mastra/agent.ts`, run the same request again, and compare the results. These are edits to one agent, not separate agents or a multi-agent system.
 
@@ -84,7 +84,7 @@ Replace `<run-id>` with the ID printed by the rehearsal. Stop that server afterw
 
 ## Reset for another take
 
-- `npm run reset -- size-exchange` restores fictional orders and preserves preferences and threads.
+- `npm run reset -- size-exchange` restores orders and preserves preferences and threads.
 - `npm run reset:preferences` clears custom preferences for the configured customer, for both Studio tools and terminal tools. Refresh Studio after code changes and start a new thread. Existing built-in working-memory records are ignored while that feature is disabled; existing chat messages remain available within their original thread.
 - Start a new thread to demonstrate fresh conversation context. Old threads and traces remain available as evidence.
 

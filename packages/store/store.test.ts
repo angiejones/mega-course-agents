@@ -11,7 +11,7 @@ test('owned lookup, cross-customer denial, and repeatable reset', () => {
     db.exec("DELETE FROM orders WHERE id = 'order-1001'");
     assert.equal(getOrder(db, 'customer-alex', 'order-1001').found, false);
     seed(db); assert.deepEqual(getOrder(db, 'customer-alex', 'order-1001'), original);
-    seed(db); assert.equal(db.prepare('SELECT count(*) AS n FROM orders').get()?.n, 3);
+    seed(db); assert.equal(db.prepare('SELECT count(*) AS n FROM orders').get()?.n, 6);
   } finally { db.close(); }
 });
 

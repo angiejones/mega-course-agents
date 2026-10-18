@@ -9,6 +9,8 @@ mkdirSync(directory, { recursive: true });
 process.env.STORE_DB_PATH = resolve(directory, 'store.db');
 process.env.AGENT_DB_PATH = resolve(directory, 'agent.db');
 const { settings } = await import('../packages/config.ts');
+const { startOrderMcpFixture } = await import('./support/order-mcp-fixture.ts');
+const closeOrderMcp = await startOrderMcpFixture();
 const { mastra } = await import('../apps/retail/src/mastra/index.ts');
 const { customerServiceConfig } = await import('../apps/retail/src/mastra/agent.ts');
 const originalOrderLookup = customerServiceConfig.orderLookup;
@@ -27,7 +29,7 @@ const model = new MastraLanguageModelV2Mock({
       content: [{
         type: 'tool-call',
         toolCallId: `lookup-${modelCalls}`,
-        toolName: 'getOrder',
+        toolName: 'orders_getOrder',
         input: JSON.stringify({ orderId: 'order-1001' }),
       }],
       finishReason: 'tool-calls',
@@ -47,16 +49,16 @@ try {
       prepareStep: () => ({ model }),
     },
   );
-  assert.equal(result.steps.length, 5, 'The default must stop at five steps');
-  assert.equal(modelCalls, 5, 'The runtime must not make a sixth model call');
-  assert.equal(result.toolResults.length, 5, 'Every scripted tool call must run');
+  assert.equal(result.steps.length, 12, 'The default must stop at twelve steps');
+  assert.equal(modelCalls, 12, 'The runtime must not make a thirteenth model call');
+  assert.equal(result.toolResults.length, 12, 'Every scripted tool call must run');
   for (const tool of result.toolResults) {
     const lookup = tool.payload.result;
     assert.ok(lookup && typeof lookup === 'object' && 'found' in lookup);
     assert.equal(lookup.found, true, 'Each lookup must succeed');
   }
   console.log(JSON.stringify({
-    check: 'five-step-limit',
+    check: 'twelve-step-limit',
     model: 'deterministic test double',
     passed: true,
     steps: result.steps.length,
@@ -70,5 +72,5 @@ try {
   process.exitCode = 1;
 } finally {
   customerServiceConfig.orderLookup = originalOrderLookup;
-  await mastra.observability.flush();
+  await mastra.observability.flush(); await closeOrderMcp();
 }

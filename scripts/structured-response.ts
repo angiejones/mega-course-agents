@@ -13,7 +13,7 @@ const customerId = values.customer?.trim();
 if (!message || !customerId) {
   throw new Error('Provide --customer <customer ID> and --message "<customer message>".');
 }
-// Simulate the signed-in customer for this isolated command-line run.
+// Set the customer identity for this isolated command-line run.
 process.env.CUSTOMER_ID = customerId;
 
 const directory = resolve('data/structured-response', randomUUID());

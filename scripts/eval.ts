@@ -9,7 +9,7 @@ const agent = mastra.getAgent('retailAgent');
 try {
   const result = await agent.generate('Look up order-1001. What did I buy?', { maxSteps: 4, memory: { resource: settings.customerId, thread: randomUUID() } });
   assert.ok(result.toolResults.length, 'Expected an actual tool call');
-  assert.match(JSON.stringify(result.toolResults), /shoe-blue-8/);
+  assert.match(JSON.stringify(result.toolResults), /jacket-blue-m/);
   await mastra.observability.flush();
   assert.ok(result.traceId, 'Expected trace ID');
   const store = await mastra.getStorage()?.getStore('observability');

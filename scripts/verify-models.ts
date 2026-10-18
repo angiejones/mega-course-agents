@@ -2,7 +2,8 @@ import { Agent } from '@mastra/core/agent';
 import { z } from 'zod';
 import assert from 'node:assert/strict';
 import { settings } from '../packages/config.ts';
-import { mastra, getOrderTool } from '../apps/retail/src/mastra/index.ts';
+import { mastra } from '../apps/retail/src/mastra/index.ts';
+import { getOrderTool } from '../packages/orders/tool.ts';
 async function main() {
 for (const model of [settings.smallModel, settings.capableModel]) {
   const agent = new Agent({ id: 'model-check', name: 'Model check', model, instructions: 'Use the provided order tool for order questions.', tools: { getOrder: getOrderTool } });

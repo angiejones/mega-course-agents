@@ -7,6 +7,8 @@ const structured = process.argv.includes('--structured');
 const dir = resolve('data/exchange-workflow', randomUUID()); mkdirSync(dir, { recursive: true });
 process.env.STORE_DB_PATH = resolve(dir, 'store.db');
 process.env.AGENT_DB_PATH = resolve(dir, 'agent.db');
+const { startOrderMcpFixture } = await import('./support/order-mcp-fixture.ts');
+const closeOrderMcp = await startOrderMcpFixture();
 const { mastra } = await import('../apps/retail/src/mastra/index.ts');
 const { openExchangeStore, seedExchangeStore } = await import('../packages/exchanges/store.ts');
 const db = openExchangeStore(process.env.STORE_DB_PATH); seedExchangeStore(db);
@@ -34,6 +36,8 @@ async function ask(prompt: string, expected: string, memory = conversation()) {
     assert.doesNotMatch(message, /in stock|available|no exchange|human review/i);
   }
   if (!structured) {
+    assert.ok(!result.toolResults.some(tool => tool.payload.toolName === 'execute_typescript'), 'Exchange requests must not use catalog code mode');
+    if (expected === 'awaiting_confirmation') assert.ok(result.toolResults.some(tool => tool.payload.toolName === 'skill'), 'Load exchange skill for a new exchange');
     assert.ok(result.text.trim(), 'Expected a conversational reply');
     assert.doesNotMatch(result.text, /^\s*(?:```json|\{)/, 'Chat must not return raw JSON');
     assert.ok(result.steps.length <= 5);
@@ -74,13 +78,13 @@ async function ask(prompt: string, expected: string, memory = conversation()) {
   return response;
 }
 try {
-  await ask('Can I exchange my shoes?', 'clarify');
+  await ask('Can I exchange my jacket?', 'clarify');
   await ask('Look up order-1002.', 'rejected');
-  await ask('The blue shoes in order-1001 arrived with the sole torn off. I want size 9 instead.', 'human_review');
+  await ask('The blue jacket in order-1001 arrived with a broken zipper. I want size L instead.', 'human_review');
   assert.equal(db.prepare('SELECT count(*) AS n FROM exchanges').get()?.n, 0);
   for (const decision of ['decline', 'confirm'] as const) {
     const memory = conversation();
-    const proposal = await ask('The blue shoes in order-1001 squeeze my toes. Can I exchange them for size 9?', 'awaiting_confirmation', memory);
+    const proposal = await ask('The blue jacket in order-1001 is tight across my shoulders. Can I exchange it for size L?', 'awaiting_confirmation', memory);
     assert.equal(db.prepare('SELECT count(*) AS n FROM exchanges').get()?.n, 0);
     const result = await ask(decision === 'confirm' ? '1' : '2', decision === 'confirm' ? 'committed' : 'declined', memory);
     assert.equal(result.requestId, proposal.requestId);
@@ -88,5 +92,5 @@ try {
     assert.equal(db.prepare('SELECT count(*) AS n FROM exchanges').get()?.n, decision === 'confirm' ? 1 : 0);
   }
 } finally {
-  console.log(`Evidence: ${dir}/chat-evidence.json`); db.close(); await mastra.observability.flush();
+  console.log(`Evidence: ${dir}/chat-evidence.json`); db.close(); await mastra.observability.flush(); await closeOrderMcp();
 }

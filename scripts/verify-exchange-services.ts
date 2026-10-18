@@ -7,7 +7,7 @@ import type { Decision } from '../packages/jev/client.ts';
 mkdirSync(resolve('data/exchange-services'), { recursive: true });
 const directory = mkdtempSync(resolve('data/exchange-services/run-'));
 const db = openExchangeStore(resolve(directory, 'store.db'));
-const input = { orderId: 'order-1001', sku: 'shoe-blue-8', replacementSku: 'shoe-blue-9', quantity: 1 };
+const input = { orderId: 'order-1001', sku: 'jacket-blue-m', replacementSku: 'jacket-blue-l', quantity: 1 };
 const evidence: object[] = [];
 try {
   seedExchangeStore(db);
@@ -15,7 +15,7 @@ try {
     type: 'choice', choice: 'fit_preference', confidence: 0.95,
     probabilities: { fit_preference: 1, product_problem: 0, unclear: 0 },
   } }, usage: { input_tokens: 0, output_tokens: 0 } };
-  const pending = await prepareExchangeFlow(db, 'customer-alex', input, 'These squeeze my toes; I need size 9.', async () => decision);
+  const pending = await prepareExchangeFlow(db, 'customer-alex', input, 'These feel tight across my shoulders; I need size L.', async () => decision);
   assert.equal(pending.status, 'awaiting_confirmation');
   if (pending.status !== 'awaiting_confirmation') throw new Error('Expected proposal');
   assert.throws(() => commitExchange(db, 'customer-alex', pending.requestId, pending.fingerprint), /confirmation_required/);
@@ -30,7 +30,7 @@ try {
   const approved = prepareExchange(db, 'customer-alex', input);
   recordConfirmation(db, 'customer-alex', approved.requestId, approved.fingerprint, true);
   const receipt = commitExchange(db, 'customer-alex', approved.requestId, approved.fingerprint);
-  // Simulate losing the response, then retry the same request.
+  // Discard the response, then retry the same request.
   assert.deepEqual(commitExchange(db, 'customer-alex', approved.requestId, approved.fingerprint), receipt);
   assert.equal(db.prepare('SELECT count(*) AS n FROM exchanges').get()?.n, 1);
   evidence.push({ check: 'committed_once_after_retry', passed: true, result: receipt, inventory: getInventory(db, input.replacementSku) });

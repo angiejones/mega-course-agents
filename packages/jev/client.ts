@@ -15,7 +15,7 @@ export async function classifyIssue(message: string, options: TypeSafeClientConf
     questions: {
       issue: choice('What kind of issue does the customer describe?', {
         fit_preference: 'A request about size, fit, color, style, or preference without a reported defect or incorrect item.',
-        product_problem: 'A specific reported defect, damage, or incorrect item, such as a broken sole or receiving a different product.',
+        product_problem: 'A specific reported defect, damage, or incorrect item, such as a broken zipper or receiving a different product.',
         unclear: 'Not enough detail to identify a fit or preference issue, defect, or incorrect item. Includes vague problems, general requests for help, and unrelated messages.',
       }),
     },

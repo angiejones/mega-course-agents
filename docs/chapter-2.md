@@ -18,7 +18,7 @@ Start Studio in a separate terminal:
 npm run dev:exchanges
 ```
 
-This creates new fictional store data under `data/exchanges/<id>/` and starts Studio with that store and a separate conversation database. Existing data is preserved. Open [Mastra Studio](http://localhost:4111) and select **Retail customer service**. Stop Studio with Control+C before starting another session on the same port.
+This creates new store data under `data/exchanges/<id>/` and starts Studio with that store and a separate conversation database. Existing data is preserved. Open [Mastra Studio](http://localhost:4111) and select **Retail customer service**. Stop Studio with Control+C before starting another session on the same port.
 
 `npm run prepare:exchanges` prepares data without starting Studio and prints a manifest path. To resume that store later, set `STORE_DB_PATH` and `AGENT_DB_PATH` to the absolute paths from its manifest before running `npm run dev`. Use the same paths to retain both the store state and conversations. The optional, ignored `data/exchange-studio.json` can select local databases; explicit nondefault paths override it.
 
@@ -26,7 +26,7 @@ Codespaces support is configured, but a fresh Codespace has not been verified. B
 
 ## Try the exchange
 
-The simulated customer is Alex (`customer-alex`). Ask:
+The configured customer is Alex (`customer-alex`). Ask:
 
 > The blue shoes in order-1001 squeeze my toes. Can I exchange them for size 9?
 
@@ -38,9 +38,9 @@ For a quality review example, start a conversation and ask:
 
 > The sole of the shoes in order-1001 separated after one wear. Can I exchange them for size 9?
 
-The product-problem path saves a referral in the fictional quality team's queue before the agent says it referred the request. This does not contact a real department, approve the exchange, or change inventory.
+The product-problem path saves a referral in the quality team's queue before the agent says it referred the request. This does not contact a real department, approve the exchange, or change inventory.
 
-The store uses a fixed clock for repeatable examples. Payments, shipping, customer sessions, and store data are fictional. This is not a production authentication or payment implementation.
+The store uses a fixed clock for repeatable examples. Customer identity comes from configuration. Connect authentication, payment processing, and shipping services before deployment.
 
 ## How the code fits together
 
@@ -71,7 +71,7 @@ Studio uses conversational replies. The same agent can return a structured answe
 npm run example:structured-response -- --customer customer-alex --message "For order-1001, the shoes are too small and squeeze my toes. Can I exchange them for size 9?"
 ```
 
-The script creates isolated data, calls `agent.generate` with `structuredOutput.schema`, and reads `result.object`. It compares proposal fields with the tool result. The customer option selects a simulated identity for this local example; a deployed service must use its authenticated session.
+The script creates isolated data, calls `agent.generate` with `structuredOutput.schema`, and reads `result.object`. It compares proposal fields with the tool result. The customer option sets the customer identity for this local run; a deployed service must use its authenticated session.
 
 ## Verification commands
 

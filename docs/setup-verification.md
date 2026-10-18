@@ -136,3 +136,49 @@ Disabled built-in working memory after a recording exposed order details carryin
 All four offline tests, TypeScript, and the credential scan passed. All 25 live scenarios passed in `data/chapter1/62689a16-0d66-4285-9a33-2279ba15c189/evidence.json`. Regression cases cover old working-memory data being ignored, the opening request asking for an order number again in a new thread, replacement sizes not being persisted, and explicit saves surviving new conversations. Offline checks verify customer isolation, reset behavior, and compatibility with the old shoe-only table.
 
 Current preferences use `customer_preferences` in store.db. The legacy table and Mastra working-memory records are preserved but unused. Existing chat messages remain available in their original threads. Reset custom preferences and start a new thread before another take. The script now demonstrates read/save results in traces instead of Studio's Working Memory panel. The agent has no maxSteps override; the rehearsal assertion now matches Mastra's five-step fallback.
+
+## Chapter 2 preparation verification, October 14, 2026
+
+Used the already cached Node 22.23.3 and npm 10.9.9 for these checks. No dependency installation or lockfile change was needed. The existing `.env.local` was preserved and no working store was reseeded.
+
+Added isolated Chapter 2 inventory, policy, quote, approval, and exchange infrastructure, with a Jev HTTP wrapper and a terminal confirmation client. The default Chapter 1 configuration is preserved. The optional `RETAIL_MODE=order-lookup` selects its corrected unsupported-exchange instruction on the same agent. Native exchange tool registration, structured final agent responses, and the Mastra workflow remain lesson implementation work.
+
+Passed type checking, all 16 offline tests, the expanded secret scan, the Chapter 2 starting-configuration check, and the deterministic five-step-limit test. The offline service rehearsal passed four checks with an explicitly labeled Jev test double; evidence is in `data/chapter2-rehearsal/run-koEzg0/evidence.json`. Both decline and confirm were exercised through the terminal interface with the offline fixture in `data/chapter2/52608a09-79d9-465a-840b-cda2ad26de9b/`. The prepared starting store in `data/chapter2/1fe24bd7-689f-49e1-b75d-2b17b8210208/` remains unused for exchanges.
+
+All 29 Chapter 1 live rehearsal checks passed with their existing assertions. Evidence is in `data/chapter1/36ae140d-0b09-4959-991a-514be2389067/evidence.json`.
+
+Live Jev verification reported `missing_key`; account access, the pinned model's live answers, and the proposed confidence threshold remain unverified. Studio confirmation and fresh Codespaces support are also unverified. See [Chapter 2 preparation](chapter-2-preparation.md) for the required setup and commands.
+
+
+## Live Jev verification after key setup
+
+The configured TypeSafe key successfully accessed `jev-1.13.0`. The first live run passed the fit and defect cases but classified "There is something wrong with my shoes" as a product problem instead of requesting clarification. Updated the classification criteria to require a concrete fault or ordered/received mismatch for the product-problem category. The original expected outcomes were retained.
+
+The revised run passed all six live cases, including additional incorrect-item, color-preference, and unspecified-help examples. All responses passed schema validation and selected the intended code branch. Evidence is in `data/jev-verification/6570b121-d9d6-45ee-82e3-fac97e904d11/evidence.json`. No credentials were printed. The confidence threshold still needs broader evaluation; these examples establish integration behavior, not general classification accuracy.
+
+
+## Conversational Studio and per-call structured output, October 16, 2026
+
+Removed the default structured-output option from the agent. Studio uses text replies; `scripts/structured-response.ts` requests the schema for a separate call to the same agent. No dependency changes were needed.
+
+Type checking, all 19 offline tests, the secret scan, and the agent configuration check passed. Live conversational and structured checks each passed clarification, cross-customer denial, defect review, proposal/decline, and proposal/confirmation. Each run used its own isolated databases. The structured checks still compare final IDs and quote fields with tool results. The standalone structured example also passed and created no completed exchange.
+
+Live Studio checks showed conversational fit, decline, and defect replies. The fit proposal was declined; no exchange was confirmed in the user's running Studio. Earlier JSON-in-chat captures describe the previous configuration.
+
+Evidence: conversational `data/exchange-workflow/e8746d50-a8bb-4643-8da4-a09f6f5ca564/chat-evidence.json`; structured `data/exchange-workflow/06b544e2-5691-417f-987b-654479e0b81b/chat-evidence.json`; standalone example `data/structured-response/95c734d7-de02-48fd-9b04-5c5a6a80fb8d/evidence.json`.
+
+
+## Numbered chat confirmation, October 16, 2026
+
+Studio confirmation now accepts `1` for confirm and `2` for decline. The parser maps the actual latest customer message to the workflow's internal decision; words or other text do not authorize an exchange. Agent instructions, tool descriptions, and the structured response schema use the numbered prompt.
+
+All 19 offline tests, type checking, secret scanning, and configuration checks passed. Both conversational and structured live rehearsals passed seven turns, including `2` declining without an exchange and `1` committing one exchange. Evidence: `data/exchange-workflow/bfe8fb8b-29e5-4cb2-954c-6743d7e3e4c7/chat-evidence.json` and `data/exchange-workflow/954b8d56-d773-44ae-a32b-70f3ec9bf355/chat-evidence.json`. Earlier records using the words confirm and decline describe the previous chat interface.
+
+
+## Recorded quality referrals, October 16, 2026
+
+Product-problem requests now create or reuse a pending record in the quality department's `quality_reviews` queue before returning `human_review`. The workflow returns the saved referral ID; the agent apologizes and reports the referral without mentioning stock availability. The referral is saved locally; no external notification is sent.
+
+Type checking, all 20 offline tests, and the secret scan passed. Offline tests cover saved referral contents, duplicate prevention, unchanged inventory and exchange records, and no referral for unauthorized or failed decisions. Both seven-turn live rehearsals passed, including database checks for the quality referral and numbered confirmation/decline. Evidence: `data/exchange-workflow/df8c7011-d9b1-44a1-895c-158ac8d1a8f3/chat-evidence.json` and `data/exchange-workflow/e770d1f7-f7ce-45e4-829b-c29aaac700a3/chat-evidence.json`.
+
+Live Studio thread `35c0f951-cc72-42e1-a539-5b3d96f87b87` showed pending quality referral `b1c51088-d65a-4025-8024-3a5354eee5eb` and the reply: “I’m sorry the blue shoes arrived with the sole torn off. I’ve referred your exchange request for size 9 to our quality team for review.”

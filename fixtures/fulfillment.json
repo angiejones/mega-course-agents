@@ -1,0 +1,134 @@
+[
+  {
+    "orderId": "order-1004",
+    "shipments": [
+      {
+        "shipmentId": "ship-1004-pack",
+        "items": [
+          {
+            "sku": "weekend-backpack-olive",
+            "quantity": 1
+          }
+        ],
+        "trackingId": "track-1004-pack"
+      },
+      {
+        "shipmentId": "ship-1004-jacket",
+        "items": [
+          {
+            "sku": "rain-jacket-navy-l",
+            "quantity": 1
+          }
+        ],
+        "trackingId": "track-1004-jacket"
+      }
+    ],
+    "tracking": [
+      {
+        "trackingId": "track-1004-pack",
+        "status": "delivered",
+        "latestEvent": "Delivered to front porch",
+        "estimatedDelivery": null
+      },
+      {
+        "trackingId": "track-1004-jacket",
+        "status": "in_transit",
+        "latestEvent": "Departed regional sorting center",
+        "estimatedDelivery": "2026-11-09"
+      }
+    ],
+    "cases": []
+  },
+  {
+    "orderId": "order-1005",
+    "shipments": [
+      {
+        "shipmentId": "ship-1005-pack",
+        "items": [
+          {
+            "sku": "weekend-backpack-olive",
+            "quantity": 1
+          }
+        ],
+        "trackingId": "track-1005-pack"
+      },
+      {
+        "shipmentId": "ship-1005-jacket",
+        "items": [
+          {
+            "sku": "rain-jacket-navy-l",
+            "quantity": 1
+          }
+        ],
+        "trackingId": "track-1005-jacket"
+      }
+    ],
+    "tracking": [
+      {
+        "trackingId": "track-1005-pack",
+        "status": "delivered",
+        "latestEvent": "Delivered to front porch",
+        "estimatedDelivery": null
+      },
+      {
+        "trackingId": "track-1005-jacket",
+        "status": "delivered",
+        "latestEvent": "Delivered to parcel locker",
+        "estimatedDelivery": null
+      }
+    ],
+    "cases": [
+      {
+        "caseId": "case-1005",
+        "sku": "rain-jacket-navy-l",
+        "status": "open",
+        "team": "delivery-support",
+        "summary": "Customer reports missing jacket",
+        "nextAction": "Please provide the parcel-locker collection receipt in case-1005."
+      }
+    ]
+  },
+  {
+    "orderId": "order-1006",
+    "shipments": [
+      {
+        "shipmentId": "ship-1006-pack",
+        "items": [
+          {
+            "sku": "weekend-backpack-olive",
+            "quantity": 1
+          }
+        ],
+        "trackingId": "track-1006-pack"
+      },
+      {
+        "shipmentId": "ship-1006-jacket",
+        "items": [
+          {
+            "sku": "rain-jacket-navy-l",
+            "quantity": 1
+          }
+        ],
+        "trackingId": null
+      }
+    ],
+    "tracking": [
+      {
+        "trackingId": "track-1006-pack",
+        "status": "delivered",
+        "latestEvent": "Delivered to front porch",
+        "estimatedDelivery": null
+      }
+    ],
+    "cases": [
+      {
+        "caseId": "case-1006",
+        "sku": "rain-jacket-navy-l",
+        "status": "open",
+        "team": "fulfillment",
+        "summary": "Jacket awaiting warehouse dispatch",
+        "nextAction": "Fulfillment is checking dispatch; no carrier tracking is available yet."
+      }
+    ]
+  }
+]

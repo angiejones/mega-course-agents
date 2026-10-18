@@ -9,7 +9,7 @@ const storePath = resolve(directory, 'store.db');
 const db = openExchangeStore(storePath);
 try { seedExchangeStore(db); } finally { db.close(); }
 const manifest = { storePath, agentPath: resolve(directory, 'agent.db'), fixtureClock,
-  customerId: 'customer-alex', startingOrder: 'order-1001', replacementSku: 'shoe-blue-9' };
+  customerId: 'customer-alex', startingOrder: 'order-1001', replacementSku: 'jacket-blue-l' };
 writeFileSync(resolve(directory, 'manifest.json'), JSON.stringify(manifest, null, 2));
 console.log(JSON.stringify(manifest, null, 2));
 console.log('Created a new isolated exchange store. Existing stores were preserved.');

@@ -1,0 +1,22 @@
+{
+  "request": "I need a rain jacket and a backpack for a weekend trip. Find the three cheapest combinations under $150 total, with the jacket in size L and both items in stock.",
+  "expectedPairs": [
+    [
+      "coast-l",
+      "daypack-one-size"
+    ],
+    [
+      "coast-l",
+      "weekender-one-size"
+    ],
+    [
+      "trail-l",
+      "daypack-one-size"
+    ]
+  ],
+  "expectedTotals": [
+    10800,
+    12800,
+    12800
+  ]
+}

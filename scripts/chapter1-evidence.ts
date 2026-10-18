@@ -80,7 +80,7 @@ async function checkExchange(id: string, orderId = 'order-1001') {
   const result = await ask(id, requestFor(id));
   assert.ok(result.toolResults.some(tool => {
     const payload = (tool as any).payload;
-    return payload?.toolName === 'getOrder' &&
+    return payload?.toolName === 'orders_getOrder' &&
       payload.args?.orderId === orderId &&
       payload.result?.found === true;
   }), 'Exchange response must use a verified order lookup');
@@ -104,7 +104,7 @@ try {
   const first = await ask('recording-missing-order',
     'Can I exchange my shoes for a larger size?', recordingThread, settings.customerId);
   assert.match(first.text, /order (?:ID|number)/i);
-  assert.ok(first.toolResults.every(tool => (tool as any).payload?.toolName !== 'getOrder'));
+  assert.ok(first.toolResults.every(tool => (tool as any).payload?.toolName !== 'orders_getOrder'));
   const orderReply = await ask('recording-order-reply', 'order-1001', recordingThread, settings.customerId);
   assert.match(JSON.stringify(orderReply.toolResults), /shoe-blue-8/);
   await ask('recording-replacement-size', 'Size 9, please.', recordingThread, settings.customerId);
@@ -112,7 +112,7 @@ try {
   const repeat = await ask('recording-new-thread',
     'Can I exchange my shoes for a larger size?', randomUUID(), settings.customerId);
   assert.match(repeat.text, /order (?:ID|number)/i);
-  assert.ok(repeat.toolResults.every(tool => (tool as any).payload?.toolName !== 'getOrder'));
+  assert.ok(repeat.toolResults.every(tool => (tool as any).payload?.toolName !== 'orders_getOrder'));
   const unsaved = await ask('unsaved-size-in-new-thread',
     'What is my preferred shoe size?', randomUUID(), settings.customerId);
   assert.ok(unsaved.toolResults.some(tool => (tool as any).payload?.toolName === 'readPreference'));
@@ -181,7 +181,7 @@ try {
   customerServiceConfig.orderLookup = false;
   const noTool = await ask('lookup-removed', 'What did I buy in order-1001?');
   assert.ok(noTool.toolResults.every(tool =>
-    (tool as any).payload?.toolName !== 'getOrder'));
+    (tool as any).payload?.toolName !== 'orders_getOrder'));
   assert.match(noTool.text, /(?:can.t|cannot|unable|no access)/i);
   assert.doesNotMatch(noTool.text, /blue|7900/);
   customerServiceConfig.orderLookup = true;
@@ -212,7 +212,7 @@ try {
   const freshLookup = await ask('lookup-missing-order-with-preference',
     'What did I buy in my order?', randomUUID(), settings.customerId);
   assert.match(freshLookup.text, /order (?:ID|number)/i);
-  assert.ok(freshLookup.toolResults.every(tool => (tool as any).payload?.toolName !== 'getOrder'));
+  assert.ok(freshLookup.toolResults.every(tool => (tool as any).payload?.toolName !== 'orders_getOrder'));
   const orderWithPreference = await ask('order-facts-with-saved-preference',
     'What did I buy in order-1001?', randomUUID(), settings.customerId);
   assert.match(JSON.stringify(orderWithPreference.toolResults), /shoe-blue-8/);
