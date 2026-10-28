@@ -13,8 +13,6 @@ export function createOrderClient() {
   });
 }
 
-// Discovery is deferred until the agent resolves its tools, after Studio starts.
-// Keep this client alive so the discovered tools can execute through it.
 export const orderClient = createOrderClient();
 
 // Generic resource access for the MCP servers configured in this application.

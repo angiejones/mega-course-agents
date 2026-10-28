@@ -42,7 +42,8 @@ export const exchangeInstruction = [
 export const customerServiceConfig = {
   exchangeInstruction,
   orderLookup: true,
-  skills: false,
+  skills: true,
+  codeMode: false,
 };
 
 export const retailAgent = new Agent<string, ToolsInput>({
@@ -68,11 +69,13 @@ export const retailAgent = new Agent<string, ToolsInput>({
       ...(customerServiceConfig.skills ? [
         'Use the shopping catalog for recommendations and exchange inventory for replacements; their SKUs are separate.',
       ] : []),
-      (await getShoppingCodeMode()).instructions,
+      ...(customerServiceConfig.codeMode ? [(await getShoppingCodeMode()).instructions] : []),
     ].join('\n'),
   tools: async () => ({
     ...(customerServiceConfig.orderLookup
-      ? Object.fromEntries(Object.entries(await orderClient.listTools()).filter(([name]) => ['orders_getOrder', 'orders_getShipments', 'orders_getTracking', 'orders_getSupportCases'].includes(name)))
+      ? Object.fromEntries(Object.entries(
+          await orderClient.listTools())
+            .filter(([name]) => ['orders_getOrder', 'orders_getShipments', 'orders_getTracking', 'orders_getSupportCases'].includes(name)))
       : {}),
     getInventory: inventoryTool,
     readPreference: readPreferenceTool,
@@ -81,7 +84,7 @@ export const retailAgent = new Agent<string, ToolsInput>({
     confirmExchange: confirmExchangeTool,
     listMcpResources: listMcpResourcesTool,
     readMcpResource: readMcpResourceTool,
-    execute_typescript: (await getShoppingCodeMode()).tool,
+    ...(customerServiceConfig.codeMode ? { execute_typescript: (await getShoppingCodeMode()).tool } : {}),
   }),
   workspace: new Workspace({
     filesystem: new LocalFilesystem({

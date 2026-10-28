@@ -29,7 +29,10 @@ export const previewExchangeTool = createTool({
   description: 'Prepare an exchange for the configured customer and display the store exchange card for their review. First use getOrder and getInventory for verified SKUs. Pass the customer explanation in message. The customer confirms or declines using the card buttons. Preparing this card does not create an exchange. If the client cannot display the card, use exchangeWithConfirmation for an elicitation form instead.',
   inputSchema: exchangeInput.extend({ message: z.string().min(1).max(8000) }),
   outputSchema: appResultSchema,
-  mcp: { _meta: { ui: { resourceUri: exchangeAppUri, visibility: ['model', 'app'] } } },
+  mcp: { _meta: { ui: {
+    resourceUri: exchangeAppUri,
+    visibility: ['model', 'app']
+  } } },
   execute: async input => {
     const run = await exchangeWorkflow.createRun();
     const result = await run.start({ inputData: input });

@@ -19,8 +19,19 @@ const appsEnabled = process.env.RETAIL_MCP_APPS === 'true';
 
 export const orderServer = new MCPServer({
   id: 'orders', name: 'Retail orders', version: '1.0.0',
-  tools: { getShipments: getShipmentsTool, getTracking: getTrackingTool, getSupportCases: getSupportCasesTool, searchProducts: searchProductsTool, getProductVariants: getProductVariantsTool, getOrder: getOrderTool, getInventory: inventoryTool, exchangeWithConfirmation: exchangeViaMcpTool,
-    ...(appsEnabled ? { previewExchange: previewExchangeTool, decideExchange: decideExchangeTool } : {}),
+  tools: {
+    getShipments: getShipmentsTool,
+    getTracking: getTrackingTool,
+    getSupportCases: getSupportCasesTool,
+    searchProducts: searchProductsTool,
+    getProductVariants: getProductVariantsTool,
+    getOrder: getOrderTool,
+    getInventory: inventoryTool,
+    exchangeWithConfirmation: exchangeViaMcpTool,
+    ...(appsEnabled ? {
+      previewExchange: previewExchangeTool,
+      decideExchange: decideExchangeTool,
+    } : {}),
   },
   appResources: appsEnabled ? { [exchangeAppUri]: { 
     name: 'Store exchange', 
