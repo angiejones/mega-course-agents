@@ -130,5 +130,29 @@
         "nextAction": "Fulfillment is checking dispatch; no carrier tracking is available yet."
       }
     ]
+  },
+  {
+    "orderId": "order-2001",
+    "shipments": [
+      {
+        "shipmentId": "shipment-exchange-2001",
+        "items": [
+          {
+            "sku": "formal-original-9",
+            "quantity": 1
+          }
+        ],
+        "trackingId": "track-exchange-2001"
+      }
+    ],
+    "tracking": [
+      {
+        "trackingId": "track-exchange-2001",
+        "status": "delivered",
+        "latestEvent": "Delivered to reception",
+        "estimatedDelivery": null
+      }
+    ],
+    "cases": []
   }
 ]

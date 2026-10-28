@@ -7,7 +7,10 @@ export function createOrderClient() {
   return new MCPClient({
     id: `retail-orders-${randomUUID()}`,
     servers: { orders: {
-      url: new URL(process.env.ORDER_MCP_URL || 'http://localhost:4111/api/mcp/orders/mcp'),
+      url: new URL(
+        process.env.ORDER_MCP_URL ||
+        `http://localhost:${process.env.PORT || '4111'}/api/mcp/orders/mcp`,
+      ),
       protocolVersion: '2026-07-28', timeout: 5000,
     } },
   });

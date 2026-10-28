@@ -39,7 +39,21 @@
     "dev:mcp-app": "npm run build:mcp-app && RETAIL_MCP_APPS=true npm run dev:exchanges",
     "verify:mcp-app": "npm run build:mcp-app && tsx scripts/verify-mcp-app.ts",
     "verify:skill-discovery": "tsx scripts/verify-skill-discovery.ts",
-    "verify:missing-item": "tsx scripts/verify-missing-item.ts"
+    "verify:missing-item": "tsx scripts/verify-missing-item.ts",
+    "prepare:collaboration": "tsx scripts/prepare-collaboration.ts",
+    "serve:carrier": "tsx scripts/serve-specialist.ts carrier",
+    "serve:supplier": "tsx scripts/serve-specialist.ts supplier",
+    "serve:retail-gateway": "tsx scripts/serve-retail-gateway.ts",
+    "shopping": "tsx agents/shopping-client/client.ts",
+    "verify:collaboration": "tsx --test packages/collaboration/*.test.ts",
+    "verify:collaboration-live": "tsx scripts/verify-collaboration-live.ts",
+    "compare:products": "tsx scripts/compare-products.ts",
+    "compare:assessment-architectures": "tsx scripts/compare-assessment-architectures.ts",
+    "dev:shopping": "cd apps/shopping && mastra dev --dir src/mastra",
+    "verify:delegation-live": "tsx scripts/verify-agent-delegation-live.ts",
+    "verify:delivery-reasoning": "tsx scripts/verify-delivery-reasoning.ts",
+    "recording:request": "tsx scripts/recording-request.ts",
+    "verify:collaboration-progression": "tsx scripts/verify-collaboration-progression.ts"
   },
   "repository": {
     "type": "git",

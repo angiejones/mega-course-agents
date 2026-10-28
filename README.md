@@ -71,7 +71,7 @@ On `chapter3`, see [Chapter 3: Agentic capabilities](docs/chapter-3.md) for MCP 
 
 The dev container pins Node and npm, installs locked dependencies, seeds the store, and runs offline checks. Add your own `OPENAI_API_KEY` as a Codespaces secret scoped to this repository, then restart the Codespace if necessary. Add `TYPESAFE_API_KEY` for Chapter 2 as well. Run `npm run dev:exchanges` yourself and open the private forwarded port 4111.
 
-Container support is configured but not yet verified in a fresh Codespace. See [setup verification](docs/setup-verification.md) for tested paths and remaining checks.
+Container support is configured but not yet verified in a fresh Codespace.
 
 ## Repository layout
 
@@ -106,3 +106,7 @@ To clear saved preferences, run `npm run reset:preferences`, then refresh Studio
 - Studio stopped: use `npm run dev:exchanges` for a fresh session, or follow the guide to resume an existing store.
 - SQLite warning: Node 22 labels its built-in SQLite API experimental; tests still verify its behavior.
 - Trace storage warning about metrics: LibSQL stores traces here, but aggregate metrics require an analytics storage backend in the reliability chapter.
+
+## Multi-agent customer service
+
+Start with retail shipment lookup, then register investigation, clarification, supplier sourcing, comparison and confirmation capabilities as you build them. This branch contains the completed implementation with collaboration tools registered. The guide explains how to remove registrations to follow the lessons incrementally. Add the personal shopping connection after completing retail. See [the setup and workflow guide](docs/multi-agent-collaboration.md).

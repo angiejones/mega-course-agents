@@ -123,5 +123,20 @@
         "currency": "USD"
       }
     ]
+  },
+  {
+    "id": "order-2001",
+    "customerId": "customer-alex",
+    "status": "delivered",
+    "items": [
+      {
+        "sku": "formal-original-9",
+        "name": "Black formal shoes, exchange replacement",
+        "size": "9",
+        "quantity": 1,
+        "paidCents": 9900,
+        "currency": "USD"
+      }
+    ]
   }
 ]

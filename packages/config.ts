@@ -30,10 +30,13 @@ try { studioSetup = JSON.parse(readFileSync(resolve(root, 'data/exchange-studio.
 // Explicit paths used by rehearsals take precedence over the local Studio selection.
 const useExchangeStudio = !!studioSetup && (!process.env.STORE_DB_PATH || process.env.STORE_DB_PATH === 'data/store.db') && (!process.env.AGENT_DB_PATH || process.env.AGENT_DB_PATH === 'data/agent.db');
 
+const selectedStorePath = resolve(root, useExchangeStudio ? studioSetup!.storePath : (process.env.STORE_DB_PATH || 'data/store.db'));
+
 export const settings = {
   smallModel: process.env.MODEL_SMALL || 'openai/gpt-6-luna',
   capableModel: process.env.MODEL_CAPABLE || 'openai/gpt-6-sol',
-  storePath: resolve(root, useExchangeStudio ? studioSetup!.storePath : (process.env.STORE_DB_PATH || 'data/store.db')),
+  storePath: selectedStorePath,
+  collaborationDirectory: resolve(root, process.env.COLLABORATION_DATA_DIR || dirname(selectedStorePath)),
   agentPath: resolve(root, useExchangeStudio ? studioSetup!.agentPath : (process.env.AGENT_DB_PATH || 'data/agent.db')),
   customerId: process.env.CUSTOMER_ID || 'customer-alex',
 };

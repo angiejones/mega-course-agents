@@ -98,7 +98,7 @@ The default small fixture remains `fixtures/catalog/trip-products.json`. Its reg
 `npm run verify:code-mode` tests both requests with skills disabled and captures model inputs. `npm test` exercises real MCP discovery and calls, price boundaries, stock filtering, general return values, sandbox restrictions, and execution timeout.
 
 
-The [standard code-mode comparison](standard-code-mode-comparison.md) used 3 runs per approach. Direct tools averaged 51,537 total tokens and 20.54 seconds; code mode averaged 2,106 tokens and 5.64 seconds. Correct rankings were 1/3 and 3/3, respectively. Code mode had no retries. These measurements apply to this request and catalog. Run `npm run compare:code-mode -- --large` to repeat the comparison; an incorrect answer makes the comparison fail after saving the results.
+The standard code-mode comparison used 3 runs per approach. Direct tools averaged 51,537 total tokens and 20.54 seconds; code mode averaged 2,106 tokens and 5.64 seconds. Correct rankings were 1/3 and 3/3, respectively. Code mode had no retries. These measurements apply to this request and catalog. Run `npm run compare:code-mode -- --large` to repeat the comparison; an incorrect answer makes the comparison fail after saving the results.
 
 ## Lesson 7: missing-item investigation
 
