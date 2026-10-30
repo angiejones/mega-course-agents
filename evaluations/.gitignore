@@ -1,0 +1,16 @@
+.venv/
+.baseline/
+results/
+retakes/
+__pycache__/
+**/__pycache__/
+reliability/*-results.json
+reliability/*-selection.json
+reliability/*-progress.json
+reliability/*-trace.json
+reliability/verification.json
+ui/*-data.json
+studio-viewer/imported-traces.json
+studio-viewer/.mastra/
+
+reliability/scoring-samples.json

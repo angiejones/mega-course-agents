@@ -110,3 +110,7 @@ To clear saved preferences, run `npm run reset:preferences`, then refresh Studio
 ## Multi-agent customer service
 
 Start with retail shipment lookup, then register investigation, clarification, supplier sourcing, comparison and confirmation capabilities as you build them. This branch contains the completed implementation with collaboration tools registered. The guide explains how to remove registrations to follow the lessons incrementally. Add the personal shopping connection after completing retail. See [the setup and workflow guide](docs/multi-agent-collaboration.md).
+
+## Chapter 5: Agent reliability
+
+The `chapter5` branch includes the exchange proposal fix, input and output guardrails on the retail agent, OpenEnv evaluations, Jev response scoring, security cases, and the reliability dashboard. Follow [the evaluation setup and walkthrough](evaluations/README.md) to run the checks with your own keys and inspect the results.

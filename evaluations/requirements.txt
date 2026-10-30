@@ -1,0 +1,2 @@
+openenv @ git+https://github.com/openenv/OpenEnv.git@3dfda7dfb9bcaf28777a5f2d07e3379efb2760bf
+python-dotenv==1.2.4

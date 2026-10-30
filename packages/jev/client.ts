@@ -1,3 +1,4 @@
+import { recordJevCall } from './usage.ts';
 import type { z } from 'zod';
 import { validateMessage } from './input.ts';
 import { choice, TypeSafeClient, type TypeSafeClientConfig } from '@typesafe-ai/sdk';
@@ -10,7 +11,7 @@ export { JevError } from './setup.ts';
 export async function classifyIssue(message: string, options: TypeSafeClientConfig = {}): Promise<Decision> {
   validateMessage(message);
   const jev = new TypeSafeClient(getJevConfig(options));
-  const result = await jev.systemOne({
+  const result = await recordJevCall(jev.defaultModel, () => jev.systemOne({
     state: { customerMessage: message },
     questions: {
       issue: choice('What kind of issue does the customer describe?', {
@@ -19,7 +20,7 @@ export async function classifyIssue(message: string, options: TypeSafeClientConf
         unclear: 'Not enough detail to identify a fit or preference issue, defect, or incorrect item. Includes vague problems, general requests for help, and unrelated messages.',
       }),
     },
-  }).catch(rethrowJevError);
+  })).catch(rethrowJevError);
   return validateDecision(result, jev.defaultModel);
 }
 

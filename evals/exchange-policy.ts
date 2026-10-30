@@ -1,4 +1,4 @@
-// Instruction used for the Lesson 3 comparison.
+// Instruction used for the exchange-policy comparison.
 export const unsupportedExchangeInstruction =
   'For exchange requests, say that you cannot process exchanges. ' +
   'Respond directly without calling tools or asking for an order ' +

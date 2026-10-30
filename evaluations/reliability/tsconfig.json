@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": [
+    "./*.ts",
+    "../runner.ts",
+    "../studio-viewer/src/**/*.ts"
+  ],
+  "exclude": [
+    "../.baseline",
+    "../fixtures"
+  ]
+}

@@ -7,6 +7,10 @@ import { exchangeWorkflow, workflowResultSchema } from './workflow.ts';
 function session() {
   const db = openExchangeStore(settings.storePath);
   db.exec('CREATE TABLE IF NOT EXISTS exchange_chat_runs (thread_id TEXT PRIMARY KEY, run_id TEXT NOT NULL, proposal TEXT NOT NULL)');
+  const columns = db.prepare('PRAGMA table_info(exchange_chat_runs)').all();
+  if (!columns.some(column => column.name === 'source_input')) {
+    db.exec('ALTER TABLE exchange_chat_runs ADD COLUMN source_input TEXT');
+  }
   return db;
 }
 export const exchangeTool = createTool({
@@ -19,13 +23,38 @@ export const exchangeTool = createTool({
     if (!thread) throw new Error('A conversation thread is required.');
     const db = session();
     try {
-      const pending = db.prepare('SELECT proposal FROM exchange_chat_runs WHERE thread_id = ?').get(thread);
-      if (pending) return workflowResultSchema.parse(JSON.parse(String(pending.proposal)));
+      const sourceInput = JSON.stringify(input);
+      const pending = db.prepare(
+        'SELECT run_id, proposal, source_input FROM exchange_chat_runs '
+        + 'WHERE thread_id = ?',
+      ).get(thread);
+      if (pending) {
+        if (pending.source_input === sourceInput) {
+          return workflowResultSchema.parse(JSON.parse(String(pending.proposal)));
+        }
+        const previous = await exchangeWorkflow.createRun({
+          runId: String(pending.run_id),
+        });
+        const cancelled = await previous.resume({
+          step: 'confirm-exchange',
+          resumeData: { decision: 'decline' },
+        });
+        if (cancelled.status !== 'success'
+            || cancelled.result.status !== 'declined') {
+          throw new Error('The previous proposal could not be invalidated.');
+        }
+        db.prepare(
+          'DELETE FROM exchange_chat_runs WHERE thread_id = ?',
+        ).run(thread);
+      }
       const run = await exchangeWorkflow.createRun();
       const result = await run.start({ inputData: input });
       if (result.status === 'suspended') {
         const proposal = workflowResultSchema.parse(result.steps['confirm-exchange']?.suspendPayload);
-        db.prepare('INSERT INTO exchange_chat_runs VALUES (?, ?, ?)').run(thread, run.runId, JSON.stringify(proposal));
+        db.prepare(
+          'INSERT INTO exchange_chat_runs '
+          + '(thread_id, run_id, proposal, source_input) VALUES (?, ?, ?, ?)',
+        ).run(thread, run.runId, JSON.stringify(proposal), sourceInput);
         return proposal;
       }
       if (result.status !== 'success') throw new Error('Exchange workflow failed.');

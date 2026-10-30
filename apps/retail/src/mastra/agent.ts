@@ -1,3 +1,5 @@
+import { supportContactTool } from "../../../../packages/guardrails/support-contact.ts";
+import { paymentCardGuardrail, staffContactGuardrail } from "../../../../packages/guardrails/index.ts";
 import { resolutionTools } from "../../../../packages/collaboration/tools.ts";
 import {
   exchangeTool,
@@ -40,6 +42,8 @@ export const retailAgent = new Agent<string, ToolsInput>({
   id: "retail-agent",
   name: "Retail customer service",
   model: settings.smallModel,
+  inputProcessors: [paymentCardGuardrail],
+  outputProcessors: [staffContactGuardrail],
   instructions: async () =>
     [
       "You help customers of a clothing store.",
@@ -77,6 +81,7 @@ export const retailAgent = new Agent<string, ToolsInput>({
           ),
         )
       : {}),
+    getSupportContact: supportContactTool,
     getInventory: inventoryTool,
     readPreference: readPreferenceTool,
     savePreference: savePreferenceTool,

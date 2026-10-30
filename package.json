@@ -14,7 +14,7 @@
     "eval": "tsx scripts/eval.ts",
     "verify:models": "tsx scripts/verify-models.ts",
     "check:secrets": "node scripts/check-secrets.mjs",
-    "check": "npm run typecheck && npm test && npm run check:secrets",
+    "check": "npm run typecheck && npm run typecheck:reliability && npm test && npm run test:reliability && npm run check:secrets",
     "build": "mastra build --dir apps/retail/src/mastra",
     "reset:preferences": "tsx scripts/reset-preferences.ts",
     "rehearse:chapter1": "tsx scripts/chapter1-evidence.ts",
@@ -53,7 +53,9 @@
     "verify:delegation-live": "tsx scripts/verify-agent-delegation-live.ts",
     "verify:delivery-reasoning": "tsx scripts/verify-delivery-reasoning.ts",
     "recording:request": "tsx scripts/recording-request.ts",
-    "verify:collaboration-progression": "tsx scripts/verify-collaboration-progression.ts"
+    "verify:collaboration-progression": "tsx scripts/verify-collaboration-progression.ts",
+    "test:reliability": "tsx --test evaluations/reliability/guardrails.test.ts",
+    "typecheck:reliability": "tsc --noEmit -p evaluations/reliability/tsconfig.json"
   },
   "repository": {
     "type": "git",

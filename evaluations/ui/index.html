@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Retail agent reliability · MEGA</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/costs.js" defer></script><script src="/app.js" defer></script>
+</head>
+<body>
+<header class="masthead"><a class="brand" href="/" aria-label="Retail agent reliability home">MEGA<span class="brand-dot">.</span></a><span class="masthead-line"></span><span class="eyebrow">AGENT RELIABILITY</span><span class="local-label"><i></i> Local test environment</span></header>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-intro"><span class="eyebrow">RETAIL AGENT</span><h2>Same agent.<br>Fresh store.</h2><p>Run a scenario. Inspect the evidence. Verify the fix.</p></div>
+    <div class="section-label"><span>RECORDED RUNS</span><button id="refresh" class="icon-button" title="Refresh runs" aria-label="Refresh recorded runs">↻</button></div>
+    <nav id="run-list" aria-label="Recorded runs"><p class="muted">Loading runs…</p></nav>
+    <div class="sidebar-footer"><span class="tiny-mark">↳</span><p>Every run gets its own store and conversation.<br><strong>Each run starts from fresh test data.</strong></p></div>
+  </aside>
+  <main>
+    <div class="page-heading"><div><div class="eyebrow">OPENENV × MASTRA</div><h1>Retail agent reliability</h1><p class="subtitle">From a customer request to a result you can check.</p></div><a class="lab-index" href="/reliability.html">RELIABILITY CHECKS ↗</a></div>
+    <section class="controls" aria-label="Run configuration">
+      <label class="scenario-field"><span class="field-label">SCENARIO</span><select id="scenario" aria-label="Scenario"><option value="late_defect">Defect reported after a quote</option></select></label>
+      <fieldset class="variant-field"><legend class="field-label">AGENT VERSION</legend><div class="segments"><button data-variant="baseline" aria-pressed="true">Baseline</button><button data-variant="fixed" aria-pressed="false">Current agent</button></div></fieldset>
+      <button id="run" class="primary-button"><span>▶</span> Run scenario</button>
+    </section>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+    <section id="job" class="job" aria-live="polite" hidden><span class="spinner"></span><div><strong id="job-title">Running scenario</strong><p id="job-progress">Starting a fresh store and conversation…</p></div></section>
+    <section id="workspace" hidden>
+      <div class="run-heading"><div class="run-heading-main"><span id="outcome" class="badge"></span><h2 id="run-title"></h2><span id="version-label" class="version-tag"></span></div><span id="run-date" class="run-date"></span></div>
+      <div class="metrics"><div><span class="metric-label">AGENT TIME</span><strong id="metric-time">—</strong></div><div><span class="metric-label">CUSTOMER TURNS</span><strong id="metric-turns">—</strong></div><div><span class="metric-label">MODEL</span><strong id="metric-model" class="model-name">—</strong></div></div>
+      <details class="run-details"><summary>Run details</summary><div class="cost-detail"><h3>Execution and evaluation costs</h3><div id="metric-cost">—</div><p>Estimated USD from recorded usage. Evaluation is separate from serving the customer.</p></div></details>
+      <div class="evidence-grid">
+        <section class="conversation panel"><div class="panel-heading"><div><span class="panel-number">01</span><h3>Conversation</h3></div><button id="replay" class="text-button">↻ Replay recorded run</button></div><p class="panel-note">Scripted customer · actual agent responses</p><div id="messages"></div><div id="replay-footer" hidden><button id="next-turn" class="primary-button">Show next turn →</button><button id="show-all" class="text-button">Show full run</button></div></section>
+        <aside class="evidence-aside">
+          <section class="panel store-panel"><div class="panel-heading"><div><span class="panel-number">02</span><h3>Store state</h3></div><span id="state-position" class="small-tag">FINAL</span></div><div class="store-counts"><div><strong id="exchange-count">0</strong><span>Exchanges</span></div><div><strong id="referral-count">0</strong><span>Quality referrals</span></div></div><div class="store-detail"><span>Exchange proposal</span><strong id="proposal-state">—</strong></div><div class="store-detail"><span>Blue jacket · size L</span><strong id="stock-state">—</strong></div><div id="store-explanation" class="store-explanation"></div></section>
+          <section class="panel eval-panel"><div class="panel-heading"><div><span class="panel-number">03</span><h3>Evaluation</h3></div></div><p class="panel-note" id="eval-note">Final checks against the saved store</p><div id="checks"></div><div class="eval-footer">Code-based checks · no model judge</div></section>
+          <section class="trace-card"><div class="trace-symbol">↗</div><h3>Follow the evidence</h3><p>Open a turn’s trace to inspect model calls, tool inputs, and tool results.</p><button id="open-studio" class="secondary-button">Inspect in Mastra Studio ↗</button><p class="trace-note">Each customer turn has its own trace.</p></section>
+        </aside>
+      </div>
+      <footer class="page-footer"><span>Observed results, not a guarantee of reliability.</span><button id="view-json" class="text-button">View run evidence ↗</button></footer>
+    </section>
+    <section id="empty" class="empty" hidden><h2>No recorded run for this selection yet.</h2><p>Run the scenario to create a fresh conversation and evaluate its result.</p></section>
+  </main>
+</div>
+<dialog id="detail-dialog"><div class="dialog-heading"><h2 id="dialog-title">Tool evidence</h2><button id="close-dialog" class="icon-button" aria-label="Close dialog">×</button></div><div id="dialog-content"></div></dialog>
+</body>
+</html>
