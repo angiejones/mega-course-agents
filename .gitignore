@@ -18,6 +18,5 @@ data/
 *.log
 .DS_Store
 
-# Instructor-only recording materials live outside this learner repository.
 docs/*-script-storyboard.md
 docs/*-instructor-code-reference.md
