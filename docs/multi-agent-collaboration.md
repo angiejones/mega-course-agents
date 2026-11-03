@@ -1,6 +1,6 @@
 # Build collaboration into the retail agent
 
-Start with the existing retail agent and add capabilities when the customer problem requires them. The supplied service and tool implementations are separate from registration. This branch contains the completed retail and shopping agents. To follow the lessons incrementally, first remove the resolutionTools registrations from the retail agent and contactRetailer from the shopping agent’s tools object. Keep their imports and existing retail tools. The steps below describe adding them back.
+Use the `chapter4` branch for this walkthrough. Start with the existing retail agent and add capabilities when the customer problem requires them. The supplied service and tool implementations are separate from registration. This branch contains the completed retail and shopping agents. To follow the lessons incrementally, first remove the resolutionTools registrations from the retail agent and contactRetailer from the shopping agent’s tools object. Keep their imports and existing retail tools. The steps below describe adding them back.
 
 ## Begin with shipment lookup
 
@@ -8,7 +8,7 @@ Use Node 22.23.3 and the existing model credentials. Before a new practice envir
 
 ```sh
 npm run prepare:collaboration
-npm run recording:request
+npm run example:request
 ```
 
 Preparation creates and selects a fresh store without deleting earlier stores. It may add missing service tokens to `.env.local`. The new scenario's collaboration databases default to the selected store's directory. Explicit database environment variables override these defaults. Each process reads the selected paths at startup, so processes started for an earlier scenario must be restarted before using a new one.
@@ -21,7 +21,7 @@ npm run dev
 
 Open http://localhost:4111 and select Retail customer service. Send the generated request in a new thread. The customer is missing the shoes from order-2001, size 9, with a $99 maximum. The generated deadline is three days ahead, so the fictional four-day recovery will miss it. Using a much later deadline can correctly produce a recovery finding instead of replacement sourcing.
 
-At this point, the agent has the existing MCP lookups but no investigation tool. Shipping and supplier services are not needed. Inspect the actual tool results to distinguish a tracking record from a completed investigation. The agent's response may vary; do not add dialogue instructions to make it match an example.
+At this point, the agent has the existing MCP lookups but no investigation tool. Shipping and supplier services are not needed. Inspect the actual tool results to distinguish a tracking record from a completed investigation. The agent's response may vary; compare its tool results and behavior with the expected outcome.
 
 ## Register the investigation
 

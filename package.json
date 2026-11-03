@@ -17,7 +17,7 @@
     "check": "npm run typecheck && npm run typecheck:reliability && npm test && npm run test:reliability && npm run check:secrets",
     "build": "mastra build --dir apps/retail/src/mastra",
     "reset:preferences": "tsx scripts/reset-preferences.ts",
-    "rehearse:chapter1": "tsx scripts/chapter1-evidence.ts",
+    "eval:chapter1": "tsx scripts/chapter1-evidence.ts",
     "verify:step-limit": "tsx scripts/check-step-limit.ts",
     "prepare:exchanges": "tsx scripts/prepare-exchange-store.ts",
     "verify:jev": "tsx scripts/verify-jev.ts",
@@ -52,7 +52,7 @@
     "dev:shopping": "cd apps/shopping && mastra dev --dir src/mastra",
     "verify:delegation-live": "tsx scripts/verify-agent-delegation-live.ts",
     "verify:delivery-reasoning": "tsx scripts/verify-delivery-reasoning.ts",
-    "recording:request": "tsx scripts/recording-request.ts",
+    "example:request": "tsx scripts/example-request.ts",
     "verify:collaboration-progression": "tsx scripts/verify-collaboration-progression.ts",
     "test:reliability": "tsx --test evaluations/reliability/guardrails.test.ts",
     "typecheck:reliability": "tsc --noEmit -p evaluations/reliability/tsconfig.json"

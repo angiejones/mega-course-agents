@@ -36,7 +36,7 @@ const evidence:unknown[]=[];
 const state=()=>read<any>(stateDb,JSON.stringify(['resolution','customer-alex',thread]),'active');
 const reservations=()=>supplierDb.prepare("SELECT count(*) AS n FROM records WHERE scope='reservation'").get()!.n;
 async function add(names: Array<keyof typeof resolutionTools>) {
-  // Test-only mutation: recording adds these same properties directly in agent.ts.
+  // Test-only mutation: the walkthrough adds these same properties directly in agent.ts.
   const current = await agent.listTools();
   for (const name of names) { current[name] = resolutionTools[name]; registered.push(name); }
   agent.__setTools(current);

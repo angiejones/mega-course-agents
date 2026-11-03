@@ -87,9 +87,9 @@ try {
     }
   }
   assert.deepEqual(snapshot(), before, 'Reference files unchanged');
-  evidence.push({ check: 'rehearsal assertions', failures });
+  evidence.push({ check: 'evaluation assertions', failures });
   writeFileSync(resolve(directory, 'evidence.json'), JSON.stringify(evidence, null, 2));
-  assert.deepEqual(failures, [], 'All rehearsal assertions pass');
+  assert.deepEqual(failures, [], 'All evaluation assertions pass');
 } finally {
   await mastra.observability.flush();
   await close();

@@ -76,7 +76,7 @@ python reliability/verify-guardrails.py
 
 The checks cover blocked full card numbers, allowed lookups and last-four digits, private staff contact replacement, and ordinary text. They inspect the actual processors attached to the retail agent. The unit tests also check that customer and official support addresses remain unchanged.
 
-To inspect the model's original draft, start the trace viewer in another terminal after recording runs:
+To inspect the model's original draft, start the trace viewer in another terminal after saving evaluation results:
 
 ```sh
 source evaluations/.venv/bin/activate

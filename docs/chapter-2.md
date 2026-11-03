@@ -1,6 +1,6 @@
 # Chapter 2: Exchange capabilities
 
-This branch extends the Chapter 1 retail customer service agent with inventory lookup, exchange policy checks, quotes, Jev issue classification, customer confirmation, and structured responses.
+Use the `chapter2` branch for this walkthrough. It extends the Chapter 1 retail customer service agent with inventory lookup, exchange policy checks, quotes, Jev issue classification, customer confirmation, and structured responses.
 
 ## Set up
 
@@ -86,6 +86,6 @@ The script creates isolated data, calls `agent.generate` with `structuredOutput.
 | `npm run verify:exchange-chat` | Conversational agent behavior and store outcomes | OpenAI and TypeSafe |
 | `npm run verify:exchange-structured` | Structured answers compared with tool outcomes | OpenAI and TypeSafe |
 
-Exchange verification scripts use isolated data. Generated databases and evidence stay under ignored `data/`. Provider calls incur charges. Run the Chapter 1 behavior rehearsal on the `chapter1` branch, whose instructions match those cases.
+Exchange verification scripts use isolated data. Generated databases and evidence stay under ignored `data/`. Provider calls incur charges. Run the Chapter 1 behavior evaluation on the `chapter1` branch, whose instructions match those cases.
 
 The original `npm run seed` reloads order-only fixtures; it is not an exchange setup command. Use `npm run dev:exchanges` or `npm run prepare:exchanges` for this branch.
