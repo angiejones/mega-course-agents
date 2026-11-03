@@ -1,8 +1,8 @@
 import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
 
-// A bounded rehearsal fixture, not a persistent development server.
-// Import only after the rehearsal has selected its isolated database paths.
+// A bounded evaluation fixture, not a persistent development server.
+// Import only after the evaluation has selected its isolated database paths.
 export async function startOrderMcpFixture() {
   const { orderServer } = await import('../../packages/mcp/order-server.ts');
   const server = createServer((req, res) => {

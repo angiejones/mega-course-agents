@@ -14,7 +14,7 @@ const { readTripProducts } = await import('../packages/catalog/trip-tools.ts');
 const fixture = JSON.parse(readFileSync('fixtures/catalog/selection-case.json', 'utf8'));
 const evidence: object[] = [];
 try {
-  assert.equal(customerServiceConfig.skills, false, 'Rehearse with skills disabled');
+  assert.equal(customerServiceConfig.skills, false, 'Run this check with skills disabled');
   for (const [prompt, expected, totals] of [
     [fixture.request, fixture.expectedPairs, fixture.expectedTotals],
     ['Find three rain jacket and backpack combinations under $100 total, jacket size L, both in stock.', [], []],

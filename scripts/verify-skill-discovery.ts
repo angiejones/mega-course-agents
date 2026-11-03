@@ -12,7 +12,7 @@ const close = await startOrderMcpFixture();
 const { mastra } = await import('../apps/retail/src/mastra/index.ts');
 const { openExchangeStore, seedExchangeStore } = await import('../packages/exchanges/store.ts');
 const agent = mastra.getAgent('retailAgent');
-// Enable the production skill source in this isolated process, without changing recording settings.
+// Enable the production skill source in this isolated process, without changing agent settings.
 const originalWorkspace = await agent.getWorkspace();
 agent.__setWorkspace(new Workspace({ filesystem: originalWorkspace?.filesystem,
   skillSource: new LocalSkillSource({ basePath: resolve('.') }), skills: [resolve('apps/retail/skills')] }));

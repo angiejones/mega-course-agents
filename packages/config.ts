@@ -27,7 +27,7 @@ const root = findProjectRoot();
 config({ path: resolve(root, '.env.local'), quiet: true });
 let studioSetup: { storePath: string; agentPath: string } | undefined;
 try { studioSetup = JSON.parse(readFileSync(resolve(root, 'data/exchange-studio.json'), 'utf8')); } catch {}
-// Explicit paths used by rehearsals take precedence over the local Studio selection.
+// Explicit paths used by evaluations take precedence over the local Studio selection.
 const useExchangeStudio = !!studioSetup && (!process.env.STORE_DB_PATH || process.env.STORE_DB_PATH === 'data/store.db') && (!process.env.AGENT_DB_PATH || process.env.AGENT_DB_PATH === 'data/agent.db');
 
 export const settings = {

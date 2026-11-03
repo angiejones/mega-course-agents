@@ -17,7 +17,7 @@
     "check": "npm run typecheck && npm test && npm run check:secrets",
     "build": "mastra build --dir apps/retail/src/mastra",
     "reset:preferences": "tsx scripts/reset-preferences.ts",
-    "rehearse:chapter1": "tsx scripts/chapter1-evidence.ts",
+    "eval:chapter1": "tsx scripts/chapter1-evidence.ts",
     "verify:step-limit": "tsx scripts/check-step-limit.ts",
     "prepare:exchanges": "tsx scripts/prepare-exchange-store.ts",
     "verify:jev": "tsx scripts/verify-jev.ts",
