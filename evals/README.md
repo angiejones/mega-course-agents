@@ -1,3 +1,11 @@
 # Evaluations
 
-`npm run eval` currently checks a real Chapter 1 order lookup and persisted trace. It calls OpenAI and resets the store first. Run `npm test` for offline order-ownership and working-memory persistence checks. `npm run rehearse:chapter1` also verifies built-in working-memory updates, recall across threads, customer isolation, and preference handling during exchanges. Later chapters will add exchange, guardrail, delegation, and recovery evaluations.
+Run `npm test` for this branch's offline tests. Run `npm run verify:step-limit` to check its model-step limit without calling a provider.
+
+Use the `chapter1` branch for `npm run eval` and `npm run eval:chapter1`. Those checks use the Chapter 1 agent and order fixtures. The chapter evaluation saves isolated data, results, and traces under `data/chapter1/<run-id>/` and makes paid model calls.
+
+For this branch's setup and verification commands, follow the chapter guides:
+
+- [Chapter 2 exchange checks](../docs/chapter-2.md#verification-commands)
+- [Chapter 3 capability checks](../docs/chapter-3.md#verification)
+- [Chapter 4 collaboration checks](../docs/multi-agent-collaboration.md#verify-behavior)

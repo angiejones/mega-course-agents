@@ -18,7 +18,7 @@ const input = { orderId: 'order-1001', sku: 'jacket-blue-m', replacementSku: 'ja
 const count = () => Number(db.prepare('SELECT count(*) AS n FROM exchanges').get()?.n);
 try {
   for (const scenario of ['decline', 'cancel-form', 'decline-form', 'invalid-answer', 'stock-changed', 'confirm', 'wrong-owner'] as const) {
-    // This database was created exclusively for this rehearsal. Reset between cases.
+    // This database was created exclusively for this evaluation. Reset between cases.
     for (const table of ['exchanges', 'exchange_requests', 'inventory', 'variants', 'exchange_policy', 'quality_reviews', 'orders', 'customer_preferences']) db.exec(`DELETE FROM ${table}`);
     seedExchangeStore(db);
     let requests = 0;

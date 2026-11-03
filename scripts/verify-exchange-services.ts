@@ -34,7 +34,7 @@ try {
   assert.deepEqual(commitExchange(db, 'customer-alex', approved.requestId, approved.fingerprint), receipt);
   assert.equal(db.prepare('SELECT count(*) AS n FROM exchanges').get()?.n, 1);
   evidence.push({ check: 'committed_once_after_retry', passed: true, result: receipt, inventory: getInventory(db, input.replacementSku) });
-  console.log('All four offline service rehearsal checks passed. Decision output is an explicit test double.');
+  console.log('All four offline service evaluation checks passed. Decision output is an explicit test double.');
 } finally {
   writeFileSync(resolve(directory, 'evidence.json'), JSON.stringify(evidence, null, 2));
   console.log(`Evidence: ${resolve(directory, 'evidence.json')}`); db.close();
