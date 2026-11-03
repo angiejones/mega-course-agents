@@ -13,7 +13,7 @@ npm install --global npm@10.9.9
 npm ci
 ```
 
-Create `.env.local` from `.env.example` only if you don't already have one. Set your own `OPENAI_API_KEY` and `TYPESAFE_API_KEY` there. Create the TypeSafe key in the [TypeSafe console](https://console.typesafe.ai/). A supplied environment variable also works, including a Codespaces secret. Never share your key. The instructor's key isn't included.
+Create `.env.local` from `.env.example` only if you don't already have one. Set your own `OPENAI_API_KEY` and `TYPESAFE_API_KEY` there. Create the TypeSafe key in the [TypeSafe console](https://console.typesafe.ai/). A supplied environment variable also works, including a Codespaces secret. Never share your key.
 
 ```bash
 npm run prepare:exchanges
@@ -39,7 +39,7 @@ Use **Control+C** in the server terminal to stop Studio. This checkpoint starts 
 
 ## Chapter 1 walkthrough
 
-On the `chapter1` branch, follow [Chapter 1: Agentic Primitives](docs/chapter-1.md) for the instruction, memory, and tool comparisons. Run `npm run rehearse:chapter1` to save isolated evidence and traces.
+On the `chapter1` branch, follow [Chapter 1: Agentic Primitives](docs/chapter-1.md) for the instruction, memory, and tool comparisons. Run `npm run eval:chapter1` to save isolated evidence and traces.
 
 ## Chapter 2 walkthrough
 
@@ -66,7 +66,7 @@ See [Chapter 2: Exchange capabilities](docs/chapter-2.md) for setup, examples, t
 
 The dev container pins Node and npm, installs locked dependencies, seeds the store, and runs offline checks. Add your own `OPENAI_API_KEY` as a Codespaces secret scoped to this repository, then restart the Codespace if necessary. Add `TYPESAFE_API_KEY` for Chapter 2 as well. Run `npm run dev:exchanges` yourself and open the private forwarded port 4111.
 
-Container support is configured but not yet verified in a fresh Codespace. See [setup verification](docs/setup-verification.md) for tested paths and remaining checks.
+Container support is configured but not yet verified in a fresh Codespace.
 
 ## Repository layout
 
@@ -80,19 +80,19 @@ Container support is configured but not yet verified in a fresh Codespace. See [
 
 ## Configuration and costs
 
-`.env.example` documents model IDs, database paths, customer identity, and future service URLs. Defaults use `openai/gpt-6-luna` for the smaller model and `openai/gpt-6-sol` for the more capable model. Both were checked for tool calls and structured output; verification details are in the setup report.
+`.env.example` documents model IDs, database paths, customer identity, and future service URLs. Defaults use `openai/gpt-6-luna` for the smaller model and `openai/gpt-6-sol` for the more capable model.
 
-Live agent calls and model checks bill your OpenAI and TypeSafe accounts as applicable. Offline checks don't call a provider. Live commands print token usage; full rehearsal costs have not yet been measured. Check your provider usage dashboard for actual charges.
+Live agent calls and model checks bill your OpenAI and TypeSafe accounts as applicable. Offline checks don't call a provider. Live commands report token usage in their output or saved results. Check your provider usage dashboard for actual charges.
 
 Orders and explicitly saved preferences live in `data/store.db`; conversation history and traces live in `data/agent.db`. `CUSTOMER_ID` selects the customer for the local application's tools, in both Studio and terminal calls. The exchange service enforces eligibility and confirmation in code.
 
 Mastra's built-in working memory and semantic recall are disabled. The agent receives the latest 20 messages from its current thread. Custom `savePreference` and `readPreference` tools provide persistence across threads when a customer asks to save a shopping preference. The schema accepts shopping categories, and the instructions require an explicit save request. Order IDs are not a supported preference category.
 
-To clear saved preferences, run `npm run reset:preferences`, then refresh Studio and start a new thread. The reset preserves orders, threads, and traces. Old Mastra working-memory records and the earlier shoe-only `preferences` table are left intact but aren't used by this implementation. Current preferences use the separate `customer_preferences` table; old records are not imported.
+To clear saved preferences, run `npm run reset:preferences`, then refresh Studio and start a new thread. The reset preserves orders, threads, and traces.
 
 ## Credentials
 
-`.env.local`, databases, logs, and build output are ignored by Git. Keep the template's key empty. Run `npm run check:secrets` before sharing changes; it checks tracked and shareable untracked files without printing secret values. This is a useful check, not a guarantee against every possible credential format. Never put keys in fixtures, screenshots, terminal recordings, or browser code.
+`.env.local`, databases, logs, and build output are ignored by Git. Keep the template's key empty. Run `npm run check:secrets` before sharing changes; it checks tracked and shareable untracked files without printing secret values. This is a useful check, not a guarantee against every possible credential format. Never put keys in fixtures, screenshots, logs, or browser code.
 
 ## Troubleshooting
 

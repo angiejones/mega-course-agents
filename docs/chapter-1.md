@@ -1,5 +1,7 @@
 # Chapter 1: Agentic Primitives
 
+Use the `chapter1` branch for this walkthrough. Save your changes before switching branches.
+
 Start Studio with `npm run dev`. This chapter uses Alex's simulated customer session. Identity is fixed by application configuration, not by a name typed into chat. All store data is fictional.
 
 There is one agent throughout this chapter: **Retail customer service**. Change its configuration in `apps/retail/src/mastra/agent.ts`, run the same request again, and compare the results. These are edits to one agent, not separate agents or a multi-agent system.
@@ -20,7 +22,7 @@ If the customer only asks to exchange an item without specifying a replacement, 
 
 Open **Traces** and inspect the user request, first model call, `getOrder` arguments, tool result, second model call, and final answer. The run ends to ask for information; no approval workflow runs in this chapter.
 
-Mastra defaults to five model steps when callers do not supply a limit. Studio can supply its own value; set Model settings → Advanced Settings → Max Steps to 5 for the lesson. A step can request multiple tools. The limit applies separately to each run.
+The agent is configured to use at most five model steps per run. Studio can supply its own value; set Model settings → Advanced Settings → Max Steps to 5 for the lesson. A step can request multiple tools. The limit applies separately to each run.
 
 ## Change instructions
 
@@ -46,13 +48,13 @@ Keep `workingMemory.enabled: false`, `semanticRecall: false`, and `lastMessages:
 
 Ask in the same thread, "What did I call my shopping trip?" It should recall the name from conversation history. Ask in a new thread; it should not know the name.
 
-In another new thread, ask "What is my preferred shoe size?" Inspect the `readPreference` result before saving. After the recording reset, it should return `found: false`.
+Run `npm run reset:preferences` to clear any saved preferences for the configured customer, then start a new thread and ask "What is my preferred shoe size?" Inspect the `readPreference` result; it should return `found: false`. Then ask:
 
 > Please remember my preferred shoe size is 9.
 
 Inspect `savePreference` in the trace. Its input should contain category `shoe_size` and value `9`; its result should confirm `saved: true`. Ask about the preferred shoe size in another new thread and inspect `readPreference` returning `9`.
 
-These are custom tools backed by `customer_preferences` in `data/store.db`, not Mastra's built-in working memory. Studio's Working Memory panel doesn't display this table. Both Studio and terminal tools use the application-configured `CUSTOMER_ID`. The table separates customers and preference categories. The tool schema accepts shopping categories; the instructions tell the model to save only on an explicit request. Do not describe those instructions as a deterministic consent check.
+These are custom tools backed by `customer_preferences` in `data/store.db`, not Mastra's built-in working memory. Studio's Working Memory panel doesn't display this table. Both Studio and terminal tools use the application-configured `CUSTOMER_ID`. The table separates customers and preference categories. The tool schema accepts shopping categories; the instructions tell the model to save only on an explicit request. The save tool doesn't independently check whether the customer requested the save, so this behavior depends on the model following its instructions.
 
 Order numbers and replacement sizes from an exchange request must not be saved as preferences. Start a fresh thread after discussing an order and ask "What did I buy in my order?" It should ask for the order number again. A remembered preference doesn't identify the next order or authorize an exchange.
 
@@ -64,15 +66,15 @@ Start a fresh thread with **Retail customer service** and ask "What did I buy in
 
 Restore `customerServiceConfig.orderLookup` to `true`, save the file, and wait for Studio to reload. Refresh its page and confirm that `getOrder` is available again before continuing.
 
-## Save evidence
+## Run the chapter evaluations
 
 The reusable cases in `evals/chapter1-cases.json` cover ownership and item clarification, along with different kinds of exchange requests. These include a color change with the original size retained and a switch to a different product. They also check an explicitly supplied size, an unspecified replacement, and an identified item in an order containing multiple items. Each case identifies the original or revised exchange configuration it tests. The revised cases require the agent to stop collecting exchange details while still answering direct order questions. Expected outcomes describe behavior, not an exact sentence.
 
 ```bash
-npm run rehearse:chapter1
+npm run eval:chapter1
 ```
 
-This paid rehearsal also changes and restores the same agent’s instruction and tool configuration to test their effects, same-thread context, a fresh thread, and explicit preference persistence. It creates an isolated store and trace database under `data/chapter1/<run-id>/`, leaving your Studio data untouched. Each result records the request, answer, tool results, step count, finish reason, token usage, and persisted trace ID in `evidence.json`. Failed rehearsals retain results too.
+This paid evaluation changes and restores the same agent's instruction and tool configuration to test their effects, same-thread context, a fresh thread, and explicit preference persistence. It creates an isolated store and trace database under `data/chapter1/<run-id>/`, leaving your Studio data untouched. Each result records the request, answer, tool results, step count, finish reason, token usage, and persisted trace ID in `evidence.json`. Failed evaluations retain results too.
 
 To inspect an isolated run's traces in Studio, first stop the existing server, then start it from the repository root with that run's paths:
 
@@ -80,14 +82,12 @@ To inspect an isolated run's traces in Studio, first stop the existing server, t
 STORE_DB_PATH=data/chapter1/<run-id>/store.db AGENT_DB_PATH=data/chapter1/<run-id>/agent.db npm run dev
 ```
 
-Replace `<run-id>` with the ID printed by the rehearsal. Stop that server afterward and run ordinary `npm run dev` to return to the default course data.
+Replace `<run-id>` with the ID printed by the evaluation. Stop that server afterward and run ordinary `npm run dev` to return to the default course data.
 
-## Reset for another take
+## Repeat an exercise
 
 - `npm run reset -- size-exchange` restores fictional orders and preserves preferences and threads.
-- `npm run reset:preferences` clears custom preferences for the configured customer, for both Studio tools and terminal tools. Refresh Studio after code changes and start a new thread. Existing built-in working-memory records are ignored while that feature is disabled; existing chat messages remain available within their original thread.
-- Start a new thread to demonstrate fresh conversation context. Old threads and traces remain available as evidence.
+- `npm run reset:preferences` clears custom preferences for the configured customer, for both Studio tools and terminal tools. Refresh Studio after code changes and start a new thread. Existing chat messages remain available within their original thread.
+- Start a new thread to run the agent without messages from an earlier conversation. Old threads and traces remain available as evidence.
 
-`npm run verify:step-limit` uses a deterministic test model that requests a lookup at every step and verifies the agent stops after exactly five steps and five successful lookups. It uses isolated data and makes no paid model calls. An empty final answer is expected when the run ends at the limit. The live rehearsal separately checks behavior with the configured model.
-
-Before recording, verify the five-step setting in Studio and run the saved cases. There is no return eligibility, inventory check, approval, or exchange mutation in this checkpoint.
+`npm run verify:step-limit` uses a deterministic test model that requests a lookup at every step and verifies the agent stops after exactly five steps and five successful lookups. It uses isolated data and makes no paid model calls. An empty final answer is expected when the run ends at the limit. The chapter evaluations separately check behavior with the configured model.
