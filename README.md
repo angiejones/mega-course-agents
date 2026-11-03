@@ -1,6 +1,26 @@
 # MEGA course agents
 
-Build a retail customer service agent with TypeScript and Mastra. This checkpoint provides a Chapter 1 order lookup agent, fictional SQLite data, and locally stored traces. Exchanges, MCP services, A2A specialists, skills, and later-chapter evals will be added in subsequent checkpoints.
+Build a retail customer service agent with TypeScript and Mastra. Each chapter has its own branch with the code and instructions for that chapter. The `main` branch contains the Chapter 1 starting point.
+
+## Choose your chapter
+
+| Chapter | Branch | Instructions |
+| --- | --- | --- |
+| 1. Agentic primitives | [chapter1](https://github.com/angiejones/mega-course-agents/tree/chapter1) | [Run the agent, change instructions, and explore memory and tools](https://github.com/angiejones/mega-course-agents/blob/chapter1/docs/chapter-1.md) |
+| 2. Exchange capabilities | [chapter2](https://github.com/angiejones/mega-course-agents/tree/chapter2) | [Inventory, policy checks, and customer confirmation](https://github.com/angiejones/mega-course-agents/blob/chapter2/docs/chapter-2.md) |
+| 3. Agentic capabilities | [chapter3](https://github.com/angiejones/mega-course-agents/tree/chapter3) | [MCP, code mode, MCP Apps, and skills](https://github.com/angiejones/mega-course-agents/blob/chapter3/docs/chapter-3.md) |
+| 4. Multi-agent collaboration | [chapter4](https://github.com/angiejones/mega-course-agents/tree/chapter4) | [Retail, carrier, supplier, and shopping agents](https://github.com/angiejones/mega-course-agents/blob/chapter4/docs/multi-agent-collaboration.md) |
+| 5. Agent reliability | [chapter5](https://github.com/angiejones/mega-course-agents/tree/chapter5) | [Evaluations, guardrails, scoring, and costs](https://github.com/angiejones/mega-course-agents/blob/chapter5/evaluations/README.md) |
+
+Save your changes with a commit or stash and stop any running course services before switching branches. From the repository directory, select the chapter you want, then install its dependencies:
+
+```bash
+git fetch origin
+git switch chapter2
+npm ci
+```
+
+Replace `chapter2` with the branch for your chapter. Follow that branch's README and chapter guide for setup and commands. Keep your existing `.env.local`; later chapters may require additional settings. The instructions below apply to the Chapter 1 code on `main`.
 
 ## Local setup
 
