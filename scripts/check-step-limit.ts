@@ -37,7 +37,7 @@ const model = new MastraLanguageModelV2Mock({
   },
 });
 
-// This check needs the lookup tool, regardless of the recording configuration.
+// This check needs the lookup tool, regardless of the current agent configuration.
 try {
   customerServiceConfig.orderLookup = true;
   const result = await mastra.getAgent('retailAgent').generate(
