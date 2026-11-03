@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { unsupportedExchangeInstruction } from '../evals/exchange-policy.ts';
 import cases from '../evals/chapter1-cases.json' with { type: 'json' };
-// Each rehearsal gets isolated business data and conversation/trace storage.
+// Each evaluation gets isolated business data and conversation/trace storage.
 const run = randomUUID();
 const directory = resolve('data/chapter1', run);
 mkdirSync(directory, { recursive: true });
@@ -48,7 +48,7 @@ async function ask(
   const store = await mastra.getStorage()?.getStore('observability');
   assert.ok(result.traceId && await store?.getTrace({ traceId: result.traceId }), 'Trace must be persisted');
   evidence.push({ label, prompt, agent: 'retailAgent', configuration: { ...customerServiceConfig, workingMemory: false }, thread, answer: result.text, steps: result.steps.length, finishReason: result.finishReason, traceId: result.traceId, toolResults: result.toolResults, resource, preferences: preferences(), usage: { inputTokens: result.totalUsage.inputTokens, outputTokens: result.totalUsage.outputTokens } });
-  // Write incrementally so failed rehearsals retain diagnostic evidence too.
+  // Write incrementally so failed evaluations retain diagnostic evidence too.
   writeFileSync(resolve(directory, 'evidence.json'), JSON.stringify(evidence, null, 2));
   console.log(`${label}: ${result.steps.length} step(s), trace saved`);
   return result;
@@ -100,16 +100,16 @@ try {
       order_id: 'order-1001', shoe_size: '9',
     } }),
   });
-  const recordingThread = randomUUID();
-  const first = await ask('recording-missing-order',
-    'Can I exchange my shoes for a larger size?', recordingThread, settings.customerId);
+  const exchangeThread = randomUUID();
+  const first = await ask('exchange-missing-order',
+    'Can I exchange my shoes for a larger size?', exchangeThread, settings.customerId);
   assert.match(first.text, /order (?:ID|number)/i);
   assert.ok(first.toolResults.every(tool => (tool as any).payload?.toolName !== 'getOrder'));
-  const orderReply = await ask('recording-order-reply', 'order-1001', recordingThread, settings.customerId);
+  const orderReply = await ask('exchange-order-reply', 'order-1001', exchangeThread, settings.customerId);
   assert.match(JSON.stringify(orderReply.toolResults), /shoe-blue-8/);
-  await ask('recording-replacement-size', 'Size 9, please.', recordingThread, settings.customerId);
+  await ask('exchange-replacement-size', 'Size 9, please.', exchangeThread, settings.customerId);
   assert.deepEqual(preferences(), [], 'Order and replacement details must not become saved preferences');
-  const repeat = await ask('recording-new-thread',
+  const repeat = await ask('exchange-new-thread',
     'Can I exchange my shoes for a larger size?', randomUUID(), settings.customerId);
   assert.match(repeat.text, /order (?:ID|number)/i);
   assert.ok(repeat.toolResults.every(tool => (tool as any).payload?.toolName !== 'getOrder'));
@@ -223,6 +223,6 @@ try {
 
   console.log(`Chapter 1 evidence passed. Saved in ${directory}`);
 } catch (error) {
-  console.error(error instanceof assert.AssertionError ? error.message : 'Chapter 1 rehearsal failed; sensitive provider error details suppressed.');
+  console.error(error instanceof assert.AssertionError ? error.message : 'Chapter 1 evaluation failed; sensitive provider error details suppressed.');
   process.exitCode = 1;
 } finally { Object.assign(customerServiceConfig, originalConfiguration); db.close(); await mastra.observability.flush(); }
